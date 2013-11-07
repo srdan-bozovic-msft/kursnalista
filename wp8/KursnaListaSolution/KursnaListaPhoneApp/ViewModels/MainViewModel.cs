@@ -10,6 +10,7 @@ using KursnaListaPhoneLib.Model;
 using KursnaListaPhoneLib.Services;
 using KursnaListaPhoneLib.Storage;
 using MSC.Phone.Common.ViewModels;
+using System.Threading;
 
 namespace KursnaListaPhoneApp.ViewModels
 {
@@ -46,12 +47,13 @@ namespace KursnaListaPhoneApp.ViewModels
         /// </summary>
         public async Task LoadData()
         {
+            CancellationTokenSource cts = new CancellationTokenSource();
             for (int i = 0; i < 100; i++)
             {
 
                 if (await _store.KursnaListaZaDaneNeedsUpdate())
                 {
-                    var result = await _client.UpdateKursnaListaZaDane(30);
+                    await _client.UpdateKursnaListaZaDane(30, cts.Token);
                 }
 
                 var kursnaListaZaDane = await _store.GetKursnaListaZaDane();

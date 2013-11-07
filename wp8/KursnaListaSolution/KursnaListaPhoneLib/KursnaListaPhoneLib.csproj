@@ -96,9 +96,9 @@
     <Compile Include="Storage\KursnaListaStore.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MSC.Phone.Common\MSC.Phone.Common.csproj">
-      <Project>{3FBB9187-A551-4FC4-8634-C700B4BF19DC}</Project>
-      <Name>MSC.Phone.Common</Name>
+    <ProjectReference Include="..\MSC.Phone.Shared\MSC.Phone.Shared.csproj">
+      <Project>{05CE307F-F924-4270-A7DC-B849B835DD47}</Project>
+      <Name>MSC.Phone.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />

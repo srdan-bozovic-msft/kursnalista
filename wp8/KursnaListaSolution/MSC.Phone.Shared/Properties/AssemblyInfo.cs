@@ -6,11 +6,11 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MSC.Phone.Common")]
+[assembly: AssemblyTitle("MSC.Phone.Shared")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MSC.Phone.Common")]
+[assembly: AssemblyProduct("MSC.Phone.Shared")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,7 +21,7 @@ using System.Resources;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3fbb9187-a551-4fc4-8634-c700b4bf19dc")]
+[assembly: Guid("05ce307f-f924-4270-a7dc-b849b835dd47")]
 
 // Version information for an assembly consists of the following four values:
 //

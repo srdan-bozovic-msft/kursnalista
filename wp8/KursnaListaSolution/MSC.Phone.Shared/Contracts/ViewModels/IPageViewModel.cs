@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSC.Phone.Common.Navigation
+namespace MSC.Phone.Shared.Contracts.ViewModels
 {
-    public class NavigationService
+    public interface IPageViewModel
     {
+        void Initialize(object parameter);
     }
 }

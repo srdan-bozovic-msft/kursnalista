@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KursnaListaPhoneLib.Storage;
-using MSC.Phone.Common.Networking;
-using MSC.Phone.Common.Services;
 using Microsoft.Phone.Reactive;
+using System.Threading;
 
 namespace KursnaListaPhoneLib.Services
 {
     public interface IKursnaListaClient
     {
-        Task<TaskCompletedSummary<Unit>> UpdateKursnaListaZaDane(int dana); 
+        Task UpdateKursnaListaZaDane(int dana, CancellationToken cancellationToken); 
     }
 }

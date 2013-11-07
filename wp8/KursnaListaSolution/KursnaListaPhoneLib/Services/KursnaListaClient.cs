@@ -5,18 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using KursnaListaPhoneLib.Model;
 using KursnaListaPhoneLib.Storage;
-using MSC.Phone.Common.Networking;
-using MSC.Phone.Common.Services;
 using Microsoft.Phone.Reactive;
+using MSC.Phone.Shared.Contracts.Services;
+using System.Threading;
 
 namespace KursnaListaPhoneLib.Services
 {
-    public class KursnaListaClient : UpdateServiceBase, IKursnaListaClient
+    public class KursnaListaClient : IKursnaListaClient
     {
-        private readonly IHttpClient _client;
+        private readonly IHttpClientService _client;
         private readonly IKursnaListaStore _store;
+        private const string BaseUrl = "https://kursna-lista.azure-mobile.net/";
 
-        public KursnaListaClient(IHttpClient client, IKursnaListaStore store)
+        public KursnaListaClient(IHttpClientService client, IKursnaListaStore store)
         {
             _client = client;
             _store = store;
@@ -24,33 +25,18 @@ namespace KursnaListaPhoneLib.Services
 
         public const string UpdateKursnaListaZaDaneTask = "UpdateKursnaListaZaDane";
 
-        public async Task<TaskCompletedSummary<Unit>> UpdateKursnaListaZaDane(int dana)
+        public async Task UpdateKursnaListaZaDane(int dana, CancellationToken cancellationToken)
         {
-            try
-            {
-                var r = await _client.GetJson<KursnaListaZaDan>("api/latest");
-                if (r == null)
-                    return new TaskCompletedSummary<Unit>
-                    {
-                        Task = UpdateKursnaListaZaDaneTask,
-                        Result = TaskSummaryResult.NullResponse
-                    };
+            var latest = await _client.GetJsonAsync<KursnaListaZaDan>(BaseUrl+"api/latest", cancellationToken);        
+   
+            if(latest == null)
+                throw new Exception();
 
-                var result = new List<KursnaListaZaDan>{ r };
+            var result = new List<KursnaListaZaDan> {
+                latest
+            };
 
-                await _store.UpdateKursnaListaZaDane(result);
-
-                return new TaskCompletedSummary<Unit>
-                {
-                    Task = UpdateKursnaListaZaDaneTask,
-                    Result = TaskSummaryResult.Success
-                };
-            }
-            catch (Exception xcp)
-            {
-                return HandleException<Unit>(UpdateKursnaListaZaDaneTask, xcp);
-            }
-
+            await _store.UpdateKursnaListaZaDane(result);
         }
     }
 }

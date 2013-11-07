@@ -6,26 +6,25 @@ using System.Windows.Markup;
 using System.Windows.Navigation;
 using KursnaListaPhoneLib.Services;
 using KursnaListaPhoneLib.Storage;
-using MSC.Phone.Common.Networking;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using KursnaListaPhoneApp.Resources;
 using KursnaListaPhoneApp.ViewModels;
+using MSC.Phone.Shared.Contracts.Services;
+using MSC.Phone.Shared.Implementation;
 
 namespace KursnaListaPhoneApp
 {
     public partial class App : Application
     {
-        private const string BaseUrl = "https://kursna-lista.azure-mobile.net/";//"http://kursnalistamob.azurewebsites.net/";
-
-        private static IHttpClient httpClient = null;
-        public static IHttpClient HttpClient
+        private static IHttpClientService httpClient = null;
+        public static IHttpClientService HttpClient
         {
             get
             {
                 if (httpClient == null)
-                    httpClient = new HttpClient(BaseUrl);
+                    httpClient = new HttpClientService();
 
                 return httpClient;
             }

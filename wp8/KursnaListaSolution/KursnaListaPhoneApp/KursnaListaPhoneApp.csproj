@@ -98,8 +98,10 @@
     </Compile>
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="UriMapper.cs" />
+    <Compile Include="ViewModels\Command.cs" />
     <Compile Include="ViewModels\ConverterViewModel.cs" />
     <Compile Include="ViewModels\ValutaViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\ConverterPage.xaml.cs">
       <DependentUpon>ConverterPage.xaml</DependentUpon>
     </Compile>
@@ -183,9 +185,9 @@
       <Project>{30FF2439-FA27-477F-A388-284EF40362DD}</Project>
       <Name>KursnaListaPhoneLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MSC.Phone.Common\MSC.Phone.Common.csproj">
-      <Project>{3FBB9187-A551-4FC4-8634-C700B4BF19DC}</Project>
-      <Name>MSC.Phone.Common</Name>
+    <ProjectReference Include="..\MSC.Phone.Shared\MSC.Phone.Shared.csproj">
+      <Project>{05CE307F-F924-4270-A7DC-B849B835DD47}</Project>
+      <Name>MSC.Phone.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
