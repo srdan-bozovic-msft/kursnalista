@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace KursnaListaPhoneLib.Model
+namespace KursnaLista.Phone.Models
 {
     public class KursnaListaZaDan
     {
-        //public int ID { get; set; }
         public int Broj { get; set; }
         public DateTime Datum { get; set; }
         public List<StavkaKursneListe> SrednjiKurs { get; set; }

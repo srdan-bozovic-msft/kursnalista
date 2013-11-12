@@ -18,7 +18,8 @@ namespace MSC.Phone.Shared.Implementation
             httpClientHandler.AutomaticDecompression = System.Net.DecompressionMethods.GZip;
             var client = new HttpClient(httpClientHandler);
             var response = await client.GetAsync(url, cancellationToken).ConfigureAwait(false);
-            if (response != null)
+            if (response != null && (
+                response.StatusCode == System.Net.HttpStatusCode.OK))
                 return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
             else
                 return default(T);

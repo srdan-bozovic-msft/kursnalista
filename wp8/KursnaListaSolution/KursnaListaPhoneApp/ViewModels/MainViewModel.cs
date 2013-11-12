@@ -6,23 +6,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Navigation;
 using KursnaListaPhoneApp.Resources;
-using KursnaListaPhoneLib.Model;
-using KursnaListaPhoneLib.Services;
-using KursnaListaPhoneLib.Storage;
 using MSC.Phone.Common.ViewModels;
 using System.Threading;
+using KursnaLista.Phone.Contracts.Repositories;
 
 namespace KursnaListaPhoneApp.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly IKursnaListaClient _client;
-        private readonly IKursnaListaStore _store;
+        private readonly IKursnaListaRepository _repository;
 
-        public MainViewModel(IKursnaListaClient client, IKursnaListaStore store)
+        public MainViewModel(IKursnaListaRepository repository)
         {
-            _client = client;
-            _store = store;
+            _repository = repository;
             this.ZaDevizeItems = new ObservableCollection<StavkaKursneListeViewModel>();
             this.ZaEfektivniStraniNovacItems = new ObservableCollection<StavkaKursneListeViewModel>();
             this.SrednjiKursItems = new ObservableCollection<StavkaKursneListeViewModel>();
@@ -48,44 +44,31 @@ namespace KursnaListaPhoneApp.ViewModels
         public async Task LoadData()
         {
             CancellationTokenSource cts = new CancellationTokenSource();
-            for (int i = 0; i < 100; i++)
+
+            var kursnaListaZaDan = await _repository.NajnovijaKursnaListaAsync(cts.Token);
+
+            Datum = kursnaListaZaDan.Datum.ToShortDateString();
+
+            foreach (var item in kursnaListaZaDan.ZaDevize)
             {
-
-                if (await _store.KursnaListaZaDaneNeedsUpdate())
-                {
-                    await _client.UpdateKursnaListaZaDane(30, cts.Token);
-                }
-
-                var kursnaListaZaDane = await _store.GetKursnaListaZaDane();
-
-                if (kursnaListaZaDane.Count > 0)
-                {
-                    var kursnaListaZaDan = kursnaListaZaDane.Last();
-
-                    Datum = kursnaListaZaDan.Datum.ToShortDateString();
-
-                    foreach (var item in kursnaListaZaDan.ZaDevize)
-                    {
-                        if (!string.IsNullOrEmpty(item.NazivZemlje))
-                            ZaDevizeItems.Add(new StavkaKursneListeViewModel(item));
-                    }
-
-                    foreach (var item in kursnaListaZaDan.ZaEfektivniStraniNovac)
-                    {
-                        if (!string.IsNullOrEmpty(item.NazivZemlje))
-                            ZaEfektivniStraniNovacItems.Add(new StavkaKursneListeViewModel(item));
-                    }
-
-                    foreach (var item in kursnaListaZaDan.SrednjiKurs)
-                    {
-                        if (!string.IsNullOrEmpty(item.NazivZemlje))
-                            SrednjiKursItems.Add(new StavkaKursneListeViewModel(item));
-                    }
-
-                    this.IsDataLoaded = true;
-                    return;
-                }
+                if (!string.IsNullOrEmpty(item.NazivZemlje))
+                    ZaDevizeItems.Add(new StavkaKursneListeViewModel(item));
             }
+
+            foreach (var item in kursnaListaZaDan.ZaEfektivniStraniNovac)
+            {
+                if (!string.IsNullOrEmpty(item.NazivZemlje))
+                    ZaEfektivniStraniNovacItems.Add(new StavkaKursneListeViewModel(item));
+            }
+
+            foreach (var item in kursnaListaZaDan.SrednjiKurs)
+            {
+                if (!string.IsNullOrEmpty(item.NazivZemlje))
+                    SrednjiKursItems.Add(new StavkaKursneListeViewModel(item));
+            }
+
+            this.IsDataLoaded = true;
+            return;
         }
     }
 }

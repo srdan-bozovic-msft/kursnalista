@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using KursnaListaPhoneLib.Model;
+using KursnaLista.Phone.Models;
 
 namespace KursnaListaPhoneApp.ViewModels
 {

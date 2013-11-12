@@ -7,24 +7,21 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using KursnaListaPhoneApp.Resources;
-using KursnaListaPhoneLib.Model;
-using KursnaListaPhoneLib.Services;
-using KursnaListaPhoneLib.Storage;
 using MSC.Phone.Common.ViewModels;
 using Microsoft.Phone.Shell;
 using System.Threading;
+using KursnaLista.Phone.Contracts.Repositories;
+using KursnaLista.Phone.Models;
 
 namespace KursnaListaPhoneApp.ViewModels
 {
     public class ConverterViewModel : ViewModelBase
     {
-        private readonly IKursnaListaClient _client;
-        private readonly IKursnaListaStore _store;
+        private readonly IKursnaListaRepository _repository;
 
-        public ConverterViewModel(IKursnaListaClient client, IKursnaListaStore store)
+        public ConverterViewModel(IKursnaListaRepository repository)
         {
-            _client = client;
-            _store = store;
+            _repository = repository;
             ValutaIzItems = new ObservableCollection<ValutaViewModel>();
             ValutaUItems = new ObservableCollection<ValutaViewModel>();
             KonvertujCommand = new Command(o => ValutaIzIndex != -1 && ValutaUIndex != -1,
@@ -90,56 +87,45 @@ namespace KursnaListaPhoneApp.ViewModels
         public async Task LoadData(string from, string to)
         {
             CancellationTokenSource cts = new CancellationTokenSource();
-            for (int i = 0; i < 100; i++)
+
+            var kursnaListaZaDan = await _repository.NajnovijaKursnaListaAsync(cts.Token);
+            var items = kursnaListaZaDan.SrednjiKurs.Where(k => k.NazivZemlje != ""
+                                                                &&
+                                                                kursnaListaZaDan.ZaDevize.Any(
+                                                                    d => d.NazivZemlje == k.NazivZemlje))
+                                        .ToList();
+            items.Insert(0,
+                         new StavkaKursneListe()
+                             {
+                                 NazivZemlje = "Srbija",
+                                 OznakaValute = "RSD",
+                                 SrednjiKurs = 1.0M
+                             });
+
+            var fromIndex = -1;
+            var toIndex = -1;
+
+            var index = 0;
+            foreach (var item in items)
             {
-                if (await _store.KursnaListaZaDaneNeedsUpdate())
-                {
-                    await _client.UpdateKursnaListaZaDane(30, cts.Token);
-                }
-                var kursnaListaZaDane = await _store.GetKursnaListaZaDane();
-
-                if (kursnaListaZaDane.Count > 0)
-                {
-                    var kursnaListaZaDan = kursnaListaZaDane.Last();
-                    var items = kursnaListaZaDan.SrednjiKurs.Where(k => k.NazivZemlje != ""
-                                                                        &&
-                                                                        kursnaListaZaDan.ZaDevize.Any(
-                                                                            d => d.NazivZemlje == k.NazivZemlje))
-                                                .ToList();
-                    items.Insert(0,
-                                 new StavkaKursneListe()
-                                     {
-                                         NazivZemlje = "Srbija",
-                                         OznakaValute = "RSD",
-                                         SrednjiKurs = 1.0M
-                                     });
-
-                    var fromIndex = -1;
-                    var toIndex = -1;
-
-                    var index = 0;
-                    foreach (var item in items)
-                    {
-                        if (item.OznakaValute == from)
-                            fromIndex = index;
-                        if (item.OznakaValute == to)
-                            toIndex = index;
-                        ValutaIzItems.Add(new ValutaViewModel(item));
-                        ValutaUItems.Add(new ValutaViewModel(item));
-                        index++;
-                    }
-
-                    ValutaIzIndex = fromIndex;
-                    ValutaUIndex = toIndex;
-
-                    OnPinModeChanged();
-
-                    KonvertujCommand.ExecuteChanged();
-
-                    this.IsDataLoaded = true;
-                    return;
-                }
+                if (item.OznakaValute == from)
+                    fromIndex = index;
+                if (item.OznakaValute == to)
+                    toIndex = index;
+                ValutaIzItems.Add(new ValutaViewModel(item));
+                ValutaUItems.Add(new ValutaViewModel(item));
+                index++;
             }
+
+            ValutaIzIndex = fromIndex;
+            ValutaUIndex = toIndex;
+
+            OnPinModeChanged();
+
+            KonvertujCommand.ExecuteChanged();
+
+            this.IsDataLoaded = true;
+            return;
         }
 
         public event EventHandler PinModeChanged;

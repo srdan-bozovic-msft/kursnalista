@@ -181,9 +181,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KursnaListaPhoneLib\KursnaListaPhoneLib.csproj">
-      <Project>{30FF2439-FA27-477F-A388-284EF40362DD}</Project>
-      <Name>KursnaListaPhoneLib</Name>
+    <ProjectReference Include="..\KursnaLista.Phone.Contracts\KursnaLista.Phone.Contracts.csproj">
+      <Project>{F670C3AF-29A9-4164-A678-4CE628A5BA5D}</Project>
+      <Name>KursnaLista.Phone.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KursnaLista.Phone.Repositories\KursnaLista.Phone.Repositories.csproj">
+      <Project>{2506381A-FEA0-4BF0-B1B4-24F6108809C7}</Project>
+      <Name>KursnaLista.Phone.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KursnaLista.Phone.Services\KursnaLista.Phone.Services.csproj">
+      <Project>{15862F1F-8397-4A4E-BC00-36CFDB20C634}</Project>
+      <Name>KursnaLista.Phone.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\MSC.Phone.Shared\MSC.Phone.Shared.csproj">
       <Project>{05CE307F-F924-4270-A7DC-B849B835DD47}</Project>

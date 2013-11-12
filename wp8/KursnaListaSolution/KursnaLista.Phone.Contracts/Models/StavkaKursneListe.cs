@@ -1,4 +1,4 @@
-﻿namespace KursnaListaPhoneLib.Model
+﻿namespace KursnaLista.Phone.Models
 {
     public class StavkaKursneListe
     {

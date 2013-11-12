@@ -4,8 +4,6 @@ using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
-using KursnaListaPhoneLib.Services;
-using KursnaListaPhoneLib.Storage;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
@@ -13,51 +11,69 @@ using KursnaListaPhoneApp.Resources;
 using KursnaListaPhoneApp.ViewModels;
 using MSC.Phone.Shared.Contracts.Services;
 using MSC.Phone.Shared.Implementation;
+using KursnaLista.Phone.Contracts.Services.Data;
+using KursnaLista.Phone.Services.Data;
+using KursnaLista.Phone.Contracts.Repositories;
+using KursnaLista.Phone.Repositories;
 
 namespace KursnaListaPhoneApp
 {
     public partial class App : Application
     {
-        private static IHttpClientService httpClient = null;
+        private static IHttpClientService _httpClient = null;
         public static IHttpClientService HttpClient
         {
             get
             {
-                if (httpClient == null)
-                    httpClient = new HttpClientService();
+                if (_httpClient == null)
+                    _httpClient = new HttpClientService();
 
-                return httpClient;
+                return _httpClient;
             }
         }
 
-        private static IKursnaListaStore store = null;
+        private static ICacheService _cacheService = null;
 
-        public static IKursnaListaStore Store
+        public static ICacheService CacheService
         {
             get
             {
-                if (store == null)
+                if (_cacheService == null)
                 {
-                    store = new KursnaListaStore();
+                    _cacheService = new PhoneStorageCacheService();
                 }
 
-                return store;
+                return _cacheService;
             }
         }
 
-        private static IKursnaListaClient client = null;
+        private static IKursnaListaDataService _dataService = null;
 
-        public static IKursnaListaClient Client
+        public static IKursnaListaDataService DataService
         {
             get
             {
-                if (client == null)
-                    client = new KursnaListaClient(HttpClient, Store);
+                if (_dataService == null)
+                    _dataService = new KursnaListaDataService(HttpClient);
 
-                return client;
+                return _dataService;
+            }
+        }
+
+        private static IKursnaListaRepository _kursnaListaRepository = null;
+
+        public static IKursnaListaRepository Repository
+        {
+            get
+            {
+                if (_kursnaListaRepository == null)
+                    _kursnaListaRepository = new KursnaListaRepository(DataService, CacheService);
+
+                return _kursnaListaRepository;
             }
         }
         
+
         private static MainViewModel mainViewModel = null;
 
         /// <summary>
@@ -70,7 +86,7 @@ namespace KursnaListaPhoneApp
             {
                 // Delay creation of the view model until necessary
                 if (mainViewModel == null)
-                    mainViewModel = new MainViewModel(Client, Store);
+                    mainViewModel = new MainViewModel(Repository);
 
                 return mainViewModel;
             }
@@ -88,7 +104,7 @@ namespace KursnaListaPhoneApp
             {
                 // Delay creation of the view model until necessary
                 if (converterViewModel == null)
-                    converterViewModel = new ConverterViewModel(Client, Store);
+                    converterViewModel = new ConverterViewModel(Repository);
 
                 return converterViewModel;
             }
