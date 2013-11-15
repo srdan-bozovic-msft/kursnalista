@@ -8,10 +8,8 @@ namespace MSC.Phone.Shared.Contracts.Services
 {
     public interface INavigationService
     {
-        void Navigate(Type type);
-        void Navigate(Type type, object parameter);
-        void Navigate(string type);
-        void Navigate(string type, object parameter);
+        void Navigate(string pageKey);
+        void Navigate(string pageKey, object parameter);
         void GoBack();
     }
 }
