@@ -51,7 +51,7 @@ namespace KursnaListaPhoneApp.Common
 
             ioc.RegisterType<IHttpClientService, HttpClientService>();
             ioc.RegisterType<ICacheService, PhoneStorageCacheService>();
-            ioc.RegisterInstance<INavigationService>(new NavigationService());
+            ioc.RegisterType<INavigationService, NavigationService>();
 
             ioc.RegisterType<IKursnaListaDataService, KursnaListaDataService>();
 

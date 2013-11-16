@@ -3,6 +3,7 @@ using MSC.Phone.Shared.Contracts.Services;
 using MSC.Phone.Shared.Contracts.Views;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,28 @@ namespace MSC.Phone.Shared.Implementation
 {
     public class NavigationService : INavigationService
     {
+        private class DynamicDictionary : DynamicObject
+        {
+            private readonly IDictionary<string, string> _properties;
+
+            public DynamicDictionary(IDictionary<string,string> properties)
+            {
+                _properties = properties;
+            }
+
+            public override bool TryGetMember(GetMemberBinder binder, out object result)
+            {
+                result = null;
+                if (!_properties.ContainsKey(binder.Name))
+                    return false;
+                var value = _properties[binder.Name];
+                result = Convert.ChangeType(value, binder.ReturnType);
+                return true;
+            }
+        }
+
         private Frame _frame;
+        private Dictionary<string, object> _parameters;
         public Frame Frame
         {
             get
@@ -33,6 +55,11 @@ namespace MSC.Phone.Shared.Implementation
             get { return Frame.Content as IPageView; }
         }
 
+        public NavigationService()
+        {
+            _parameters = new Dictionary<string, object>();
+        }
+
         private void OnFrameNavigated(object sender, NavigationEventArgs e)
         {
             var view = e.Content as IPageView;
@@ -47,9 +74,21 @@ namespace MSC.Phone.Shared.Implementation
                     (((Page)e.Content).NavigationCacheMode == NavigationCacheMode.Enabled
                     || (((Page)e.Content).NavigationCacheMode == NavigationCacheMode.Required))))
                 {
-                    //dynamic parameters = new object();
-                    //((Page)e.Content).NavigationContext.QueryString
-                    viewModel.InitializeAsync(e.Uri);
+                    var parameters = ((Page)e.Content).NavigationContext.QueryString;
+                    if (parameters.Count == 1 && parameters.ContainsKey("x-guid"))
+                    {
+                        var key = parameters["x-guid"];
+                        if (_parameters.ContainsKey(key))
+                        {
+                            var parameter = _parameters[key];
+                            _parameters.Remove(key);
+                            viewModel.InitializeAsync(parameter);
+                        }
+                    }
+                    else
+                    {
+                        viewModel.InitializeAsync(new DynamicDictionary(parameters));
+                    }
                 }
             }
         }
@@ -79,16 +118,15 @@ namespace MSC.Phone.Shared.Implementation
 
         public void Navigate(string pageKey)
         {
-            NavigateTo(new Uri(string.Format("/{0}.xaml", pageKey), UriKind.Relative));
+            NavigateTo(new Uri(string.Format("/Views/{0}PageView.xaml", pageKey), UriKind.Relative));
         }
 
         public void Navigate(string pageKey, object parameter)
         {
             DisposePreviousView();
             var key = Guid.NewGuid().ToString();
-            //SimpleIoc.Default.Register<object>(() => parameter, key);
-
-            NavigateTo(new Uri(string.Format("/{0}.xaml?key={1}", pageKey, key), UriKind.Relative));
+            _parameters.Add(key, parameter);
+            NavigateTo(new Uri(string.Format("/Views/{0}PageView.xaml?x-guid={1}", pageKey, key), UriKind.Relative));
         }
 
         private void NavigateTo(Uri pageUri)

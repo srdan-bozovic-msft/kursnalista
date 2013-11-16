@@ -32,7 +32,7 @@ namespace KursnaLista.Phone.ViewModels
                                                 Result = (string.IsNullOrEmpty(Iznos) ? 0 : Convert.ToDecimal(Iznos)) * ValutaIzItems[ValutaIzIndex].SrednjiKurs / ValutaUItems[ValutaUIndex].SrednjiKurs;
                                             },
                                                () => ValutaIzIndex != -1 && ValutaUIndex != -1);
-            SetTileCommand = new RelayCommand(() => SetTile());
+            SetTileCommand = new RelayCommand(SetTile);
         }
 
         public ObservableCollection<IValutaViewModel> ValutaIzItems { get; private set; }
@@ -98,7 +98,7 @@ namespace KursnaLista.Phone.ViewModels
         {
             if (!IsDataLoaded)
             {
-                await LoadData(parameter.From, parameter.To);
+                await LoadData(parameter.from, parameter.to);
             }
         }
         /// <summary>
@@ -141,25 +141,40 @@ namespace KursnaLista.Phone.ViewModels
             ValutaUIndex = toIndex;
 
             OnPinModeChanged();
-
             KonvertujCommand.RaiseCanExecuteChanged();
 
             this.IsDataLoaded = true;
             return;
         }
 
-        public event EventHandler PinModeChanged;
-
         private void OnPinModeChanged()
         {
-            if (PinModeChanged != null && ValutaIzIndex !=-1 && ValutaUIndex != -1)
-                PinModeChanged(this, EventArgs.Empty);
+            RaisePropertyChanged("SetTileButtonIconUri");
+            RaisePropertyChanged("SetTileButtonText");
+        }
+
+        public Uri SetTileButtonIconUri
+        {
+            get
+            {
+                return PinMode ? new Uri("/Assets/AppBar/pin.png", UriKind.Relative) : new Uri("/Assets/AppBar/unpin.png", UriKind.Relative);
+            }
+        }
+
+        public string SetTileButtonText
+        {
+            get
+            {
+                return PinMode ? "zakači" : "otkači";
+            }
         }
         
         public bool PinMode
         {
             get
             {
+                if (ValutaIzIndex == -1 || ValutaUIndex == -1)
+                    return true;
                 var from = ValutaIzItems[ValutaIzIndex].Oznaka;
                 var to = ValutaUItems[ValutaUIndex].Oznaka;
                 return !TileExists(from, to);
@@ -184,7 +199,7 @@ namespace KursnaLista.Phone.ViewModels
 
         private bool TileExists(string from, string to)
         {
-            var url = string.Format("/Views/ConverterPage.xaml?from={0}&to={1}", from, to);
+            var url = string.Format("/Views/ConverterPageView.xaml?from={0}&to={1}", from, to);
 
             ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault(o => o.NavigationUri.ToString().Contains(url));
             return tile == null ? false : true;
@@ -192,7 +207,7 @@ namespace KursnaLista.Phone.ViewModels
 
         private void DeleteTile(string from, string to)
         {
-            var url = string.Format("/Views/ConverterPage.xaml?from={0}&to={1}", from, to);
+            var url = string.Format("/Views/ConverterPageView.xaml?from={0}&to={1}", from, to);
 
             ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault(o => o.NavigationUri.ToString().Contains(url));
             if (tile == null) return;
@@ -204,7 +219,7 @@ namespace KursnaLista.Phone.ViewModels
 
         private void CreateTile(string from, string to)
         {
-            var url = string.Format("/Views/ConverterPage.xaml?from={0}&to={1}", from, to);
+            var url = string.Format("/Views/ConverterPageView.xaml?from={0}&to={1}", from, to);
 
             var tileData = new FlipTileData
             {

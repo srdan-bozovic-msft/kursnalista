@@ -11,8 +11,9 @@ namespace KursnaLista.Phone.Contracts.ViewModels
         string Iznos { get; set; }
         RelayCommand KonvertujCommand { get; set; }
         bool PinMode { get; }
-        event EventHandler PinModeChanged;
-        decimal Result { get; set; }
+        decimal Result { get; set; }        
+        Uri SetTileButtonIconUri { get; }
+        string SetTileButtonText { get; }        
         RelayCommand SetTileCommand { get; set; }
         int ValutaIzIndex { get; set; }
         ObservableCollection<IValutaViewModel> ValutaIzItems { get; }

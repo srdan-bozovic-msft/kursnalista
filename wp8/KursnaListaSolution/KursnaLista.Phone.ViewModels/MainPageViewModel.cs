@@ -9,19 +9,24 @@ using System.Threading;
 using KursnaLista.Phone.Contracts.Repositories;
 using GalaSoft.MvvmLight;
 using KursnaLista.Phone.Contracts.ViewModels;
+using MSC.Phone.Shared.Contracts.Services;
+using GalaSoft.MvvmLight.Command;
 
 namespace KursnaLista.Phone.ViewModels
 {
     public class MainPageViewModel : ViewModelBase, IMainPageViewModel
     {
+        private readonly INavigationService _navigationService;
         private readonly IKursnaListaRepository _repository;
 
-        public MainPageViewModel(IKursnaListaRepository repository)
+        public MainPageViewModel(INavigationService navigationService, IKursnaListaRepository repository)
         {
+            _navigationService = navigationService;
             _repository = repository;
             this.ZaDevizeItems = new ObservableCollection<IStavkaKursneListeViewModel>();
             this.ZaEfektivniStraniNovacItems = new ObservableCollection<IStavkaKursneListeViewModel>();
             this.SrednjiKursItems = new ObservableCollection<IStavkaKursneListeViewModel>();
+            GoToConverterCommand = new RelayCommand(() => _navigationService.Navigate("Converter", new { from = "RSD", to = "EUR" }));
         }
 
         public ObservableCollection<IStavkaKursneListeViewModel> ZaDevizeItems { get; private set; }
@@ -41,6 +46,8 @@ namespace KursnaLista.Phone.ViewModels
         }
 
         public bool IsDataLoaded { get; private set; }
+
+        public RelayCommand GoToConverterCommand { get; set; }
 
         public async Task InitializeAsync(dynamic parameter)
         {
