@@ -8,6 +8,6 @@ namespace MSC.Phone.Shared.Contracts.ViewModels
 {
     public interface IPageViewModel
     {
-        void Initialize(object parameter);
+        Task InitializeAsync(dynamic parameter);
     }
 }

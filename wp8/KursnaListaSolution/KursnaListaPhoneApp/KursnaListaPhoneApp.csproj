@@ -97,16 +97,13 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="LocalizedStrings.cs" />
-    <Compile Include="UriMapper.cs" />
-    <Compile Include="ViewModels\Command.cs" />
-    <Compile Include="ViewModels\ConverterViewModel.cs" />
-    <Compile Include="ViewModels\ValutaViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Views\ConverterPage.xaml.cs">
-      <DependentUpon>ConverterPage.xaml</DependentUpon>
+    <Compile Include="Common\UriMapper.cs" />
+    <Compile Include="Common\ViewModelLocator.cs" />
+    <Compile Include="Views\ConverterPageView.xaml.cs">
+      <DependentUpon>ConverterPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="Views\MainPageView.xaml.cs">
+      <DependentUpon>MainPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
@@ -114,19 +111,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\StavkaKursneListeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="Views\ConverterPage.xaml">
+    <Page Include="Views\ConverterPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MainPage.xaml">
+    <Page Include="Views\MainPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -193,14 +188,31 @@
       <Project>{15862F1F-8397-4A4E-BC00-36CFDB20C634}</Project>
       <Name>KursnaLista.Phone.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KursnaLista.Phone.ViewModels\KursnaLista.Phone.ViewModels.csproj">
+      <Project>{996DD507-3598-4FDE-9089-8AAEFF6364E1}</Project>
+      <Name>KursnaLista.Phone.ViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MSC.Phone.Shared.DI\MSC.Phone.Shared.DI.csproj">
+      <Project>{0E9A1853-6A58-45A5-8FD2-01866CF10059}</Project>
+      <Name>MSC.Phone.Shared.DI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MSC.Phone.Shared\MSC.Phone.Shared.csproj">
       <Project>{05CE307F-F924-4270-A7DC-B849B835DD47}</Project>
       <Name>MSC.Phone.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="GalaSoft.MvvmLight.Extras.WP8">
+      <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\wp8\GalaSoft.MvvmLight.Extras.WP8.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.WP8">
+      <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\wp8\GalaSoft.MvvmLight.WP8.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone.Controls.Toolkit">
       <HintPath>..\packages\WPtoolkit.4.2012.10.30\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -212,6 +224,9 @@
     <Reference Include="System.Net.Http.Primitives, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Net.Http.2.2.18\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\wp8\System.Windows.Interactivity.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />

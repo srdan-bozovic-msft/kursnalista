@@ -8,18 +8,20 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using KursnaListaPhoneApp.Resources;
+using KursnaLista.Phone.Contracts.Views;
+using MSC.Phone.Shared.Contracts.ViewModels;
 
 namespace KursnaListaPhoneApp
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPageView : PhoneApplicationPage, IMainPageView
     {
         // Constructor
-        public MainPage()
+        public MainPageView()
         {
             InitializeComponent();
 
             // Set the data context of the listbox control to the sample data
-            DataContext = App.MainViewModel;
+            // DataContext = App.MainViewModel;
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
@@ -28,10 +30,10 @@ namespace KursnaListaPhoneApp
         // Load data for the ViewModel Items
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (!App.MainViewModel.IsDataLoaded)
-            {
-                App.MainViewModel.LoadData();
-            }
+            //if (!App.MainViewModel.IsDataLoaded)
+            //{
+            //    App.MainViewModel.LoadData();
+            //}
         }
 
         // Sample code for building a localized ApplicationBar
@@ -57,6 +59,11 @@ namespace KursnaListaPhoneApp
         private void ButtonExchangeClick(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/Views/ConverterPage.xaml?from=RSD&to=EUR", UriKind.Relative));
+        }
+
+        public IPageViewModel ViewModel
+        {
+            get { return DataContext as IPageViewModel; }
         }
     }
 }

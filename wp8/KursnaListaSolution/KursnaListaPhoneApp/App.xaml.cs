@@ -8,109 +8,18 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using KursnaListaPhoneApp.Resources;
-using KursnaListaPhoneApp.ViewModels;
 using MSC.Phone.Shared.Contracts.Services;
 using MSC.Phone.Shared.Implementation;
 using KursnaLista.Phone.Contracts.Services.Data;
 using KursnaLista.Phone.Services.Data;
 using KursnaLista.Phone.Contracts.Repositories;
 using KursnaLista.Phone.Repositories;
+using KursnaListaPhoneApp.Common;
 
 namespace KursnaListaPhoneApp
 {
     public partial class App : Application
     {
-        private static IHttpClientService _httpClient = null;
-        public static IHttpClientService HttpClient
-        {
-            get
-            {
-                if (_httpClient == null)
-                    _httpClient = new HttpClientService();
-
-                return _httpClient;
-            }
-        }
-
-        private static ICacheService _cacheService = null;
-
-        public static ICacheService CacheService
-        {
-            get
-            {
-                if (_cacheService == null)
-                {
-                    _cacheService = new PhoneStorageCacheService();
-                }
-
-                return _cacheService;
-            }
-        }
-
-        private static IKursnaListaDataService _dataService = null;
-
-        public static IKursnaListaDataService DataService
-        {
-            get
-            {
-                if (_dataService == null)
-                    _dataService = new KursnaListaDataService(HttpClient);
-
-                return _dataService;
-            }
-        }
-
-        private static IKursnaListaRepository _kursnaListaRepository = null;
-
-        public static IKursnaListaRepository Repository
-        {
-            get
-            {
-                if (_kursnaListaRepository == null)
-                    _kursnaListaRepository = new KursnaListaRepository(DataService, CacheService);
-
-                return _kursnaListaRepository;
-            }
-        }
-        
-
-        private static MainViewModel mainViewModel = null;
-
-        /// <summary>
-        /// A static ViewModel used by the views to bind against.
-        /// </summary>
-        /// <returns>The MainViewModel object.</returns>
-        public static MainViewModel MainViewModel
-        {
-            get
-            {
-                // Delay creation of the view model until necessary
-                if (mainViewModel == null)
-                    mainViewModel = new MainViewModel(Repository);
-
-                return mainViewModel;
-            }
-        }
-
-        private static ConverterViewModel converterViewModel = null;
-
-        /// <summary>
-        /// A static ViewModel used by the views to bind against.
-        /// </summary>
-        /// <returns>The MainViewModel object.</returns>
-        public static ConverterViewModel ConverterViewModel
-        {
-            get
-            {
-                // Delay creation of the view model until necessary
-                if (converterViewModel == null)
-                    converterViewModel = new ConverterViewModel(Repository);
-
-                return converterViewModel;
-            }
-        }
-
-
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>
@@ -151,7 +60,7 @@ namespace KursnaListaPhoneApp
                 // the application's idle detection.
                 // Caution:- Use this under debug mode only. Application that disables user idle detection will continue to run
                 // and consume battery power when the user is not using the phone.
-                PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
+                // PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
         }
 
@@ -159,27 +68,7 @@ namespace KursnaListaPhoneApp
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-        //    // A unique name for the task. 
-        //    var taskName = "Kursna lista";
 
-        //    // If the task exists
-        //    var oldTask = ScheduledActionService.Find(taskName) as PeriodicTask;
-        //    if (oldTask != null)
-        //    {
-        //        ScheduledActionService.Remove(taskName);
-        //    }
-
-        //    // Create the Task
-        //    PeriodicTask task = new PeriodicTask(taskName);
-
-        //    // Description is required
-        //    task.Description = "Periodično osvežava kursnu listu koja se prikazuje na pločici";
-
-        //    // Add it to the service to execute
-        //    ScheduledActionService.Add(task);
-
-        //    // For debugging
-        //    ScheduledActionService.LaunchForTest(taskName, TimeSpan.FromMilliseconds(5000));
         }
 
         // Code to execute when the application is activated (brought to foreground)
@@ -237,18 +126,22 @@ namespace KursnaListaPhoneApp
             if (phoneApplicationInitialized)
                 return;
 
+            var navigationService = ViewModelLocator.InstanceFactory.GetInstance<INavigationService>();
+
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
             RootFrame = new TransitionFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
-            RootFrame.UriMapper = new UriMapper();
+            RootFrame.UriMapper = new Common.UriMapper();
 
             // Handle navigation failures
             RootFrame.NavigationFailed += RootFrame_NavigationFailed;
 
             // Handle reset requests for clearing the backstack
             RootFrame.Navigated += CheckForResetNavigation;
+
+            navigationService.Frame = RootFrame;
 
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;

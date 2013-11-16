@@ -5,43 +5,52 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Navigation;
-using KursnaListaPhoneApp.Resources;
-using MSC.Phone.Common.ViewModels;
 using System.Threading;
 using KursnaLista.Phone.Contracts.Repositories;
+using GalaSoft.MvvmLight;
+using KursnaLista.Phone.Contracts.ViewModels;
 
-namespace KursnaListaPhoneApp.ViewModels
+namespace KursnaLista.Phone.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class MainPageViewModel : ViewModelBase, IMainPageViewModel
     {
         private readonly IKursnaListaRepository _repository;
 
-        public MainViewModel(IKursnaListaRepository repository)
+        public MainPageViewModel(IKursnaListaRepository repository)
         {
             _repository = repository;
-            this.ZaDevizeItems = new ObservableCollection<StavkaKursneListeViewModel>();
-            this.ZaEfektivniStraniNovacItems = new ObservableCollection<StavkaKursneListeViewModel>();
-            this.SrednjiKursItems = new ObservableCollection<StavkaKursneListeViewModel>();
+            this.ZaDevizeItems = new ObservableCollection<IStavkaKursneListeViewModel>();
+            this.ZaEfektivniStraniNovacItems = new ObservableCollection<IStavkaKursneListeViewModel>();
+            this.SrednjiKursItems = new ObservableCollection<IStavkaKursneListeViewModel>();
         }
 
-        public ObservableCollection<StavkaKursneListeViewModel> ZaDevizeItems { get; private set; }
-        public ObservableCollection<StavkaKursneListeViewModel> ZaEfektivniStraniNovacItems { get; private set; }
-        public ObservableCollection<StavkaKursneListeViewModel> SrednjiKursItems { get; private set; }
+        public ObservableCollection<IStavkaKursneListeViewModel> ZaDevizeItems { get; private set; }
+        public ObservableCollection<IStavkaKursneListeViewModel> ZaEfektivniStraniNovacItems { get; private set; }
+        public ObservableCollection<IStavkaKursneListeViewModel> SrednjiKursItems { get; private set; }
 
         private string _datum;
 
         public string Datum
         {
             get { return _datum; }
-            set { SetProperty(ref _datum, value); }
+            set             
+            { 
+                this._datum = value;
+                RaisePropertyChanged("Datum"); 
+            }
         }
 
         public bool IsDataLoaded { get; private set; }
 
-        /// <summary>
-        /// Creates and adds a few ItemViewModel objects into the Items collection.
-        /// </summary>
-        public async Task LoadData()
+        public async Task InitializeAsync(dynamic parameter)
+        {
+            if (!IsDataLoaded)
+            {
+                await LoadData();
+            }
+        }
+
+        protected async Task LoadData()
         {
             CancellationTokenSource cts = new CancellationTokenSource();
 

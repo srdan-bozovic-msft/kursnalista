@@ -8,19 +8,21 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using KursnaLista.Phone.Contracts.Views;
+using MSC.Phone.Shared.Contracts.ViewModels;
 
 namespace KursnaListaPhoneApp.Views
 {
-    public partial class ConverterPage : PhoneApplicationPage
+    public partial class ConverterPageView : PhoneApplicationPage, IConverterPageView
     {
         private const string PinAppBarUrl = "/Assets/AppBar/pin.png";
         private const string UnpinAppBarUrl = "/Assets/AppBar/unpin.png";
 
-        public ConverterPage()
+        public ConverterPageView()
         {
             InitializeComponent();
             // Set the data context of the listbox control to the sample data
-            DataContext = App.ConverterViewModel;
+            //DataContext = App.ConverterViewModel;
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
@@ -29,19 +31,19 @@ namespace KursnaListaPhoneApp.Views
         // Load data for the ViewModel Items
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (!App.ConverterViewModel.IsDataLoaded)
-            {
-                var from = NavigationContext.QueryString["from"];
-                var to = NavigationContext.QueryString["to"];
+            //if (!App.ConverterViewModel.IsDataLoaded)
+            //{
+            //    var from = NavigationContext.QueryString["from"];
+            //    var to = NavigationContext.QueryString["to"];
 
-                App.ConverterViewModel.PinModeChanged += (_, __) => SetPinButton(App.ConverterViewModel.PinMode);
-                App.ConverterViewModel.LoadData(from, to);
-            }
+            //    App.ConverterViewModel.PinModeChanged += (_, __) => SetPinButton(App.ConverterViewModel.PinMode);
+            //    App.ConverterViewModel.LoadData(from, to);
+            //}
         }
 
         private void ButtonPinToStartClick(object sender, EventArgs e)
         {
-            App.ConverterViewModel.SetTileCommand.Execute(null);
+            //App.ConverterViewModel.SetTileCommand.Execute(null);
         }
 
         public ApplicationBarIconButton pinBtn
@@ -72,6 +74,11 @@ namespace KursnaListaPhoneApp.Views
                 pinBtn.IconUri = new Uri(UnpinAppBarUrl, UriKind.Relative);
                 pinBtn.Text = "otkači";
             }
+        }
+
+        public IPageViewModel ViewModel
+        {
+            get { return DataContext as IPageViewModel; }
         }
     }
 }

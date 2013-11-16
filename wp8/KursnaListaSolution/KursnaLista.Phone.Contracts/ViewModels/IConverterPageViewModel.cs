@@ -1,0 +1,22 @@
+﻿using GalaSoft.MvvmLight.Command;
+using MSC.Phone.Shared.Contracts.ViewModels;
+using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+namespace KursnaLista.Phone.Contracts.ViewModels
+{
+    public interface IConverterPageViewModel : IPageViewModel
+    {
+        bool IsDataLoaded { get; }
+        string Iznos { get; set; }
+        RelayCommand KonvertujCommand { get; set; }
+        bool PinMode { get; }
+        event EventHandler PinModeChanged;
+        decimal Result { get; set; }
+        RelayCommand SetTileCommand { get; set; }
+        int ValutaIzIndex { get; set; }
+        ObservableCollection<IValutaViewModel> ValutaIzItems { get; }
+        int ValutaUIndex { get; set; }
+        ObservableCollection<IValutaViewModel> ValutaUItems { get; }
+    }
+}

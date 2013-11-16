@@ -6,34 +6,37 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Navigation;
-using KursnaListaPhoneApp.Resources;
-using MSC.Phone.Common.ViewModels;
+
 using Microsoft.Phone.Shell;
 using System.Threading;
 using KursnaLista.Phone.Contracts.Repositories;
 using KursnaLista.Phone.Models;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using KursnaLista.Phone.Contracts.ViewModels;
 
-namespace KursnaListaPhoneApp.ViewModels
+namespace KursnaLista.Phone.ViewModels
 {
-    public class ConverterViewModel : ViewModelBase
+    public class ConverterPageViewModel : ViewModelBase, IConverterPageViewModel
     {
         private readonly IKursnaListaRepository _repository;
 
-        public ConverterViewModel(IKursnaListaRepository repository)
+        public ConverterPageViewModel(IKursnaListaRepository repository)
         {
             _repository = repository;
-            ValutaIzItems = new ObservableCollection<ValutaViewModel>();
-            ValutaUItems = new ObservableCollection<ValutaViewModel>();
-            KonvertujCommand = new Command(o => ValutaIzIndex != -1 && ValutaUIndex != -1,
-                                            o =>
-                                               {
-                                                   Result = (string.IsNullOrEmpty(Iznos) ? 0 : Convert.ToDecimal(Iznos)) * ValutaIzItems[ValutaIzIndex].Model.SrednjiKurs / ValutaUItems[ValutaUIndex].Model.SrednjiKurs;
-                                               });
-            SetTileCommand = new Command(o => SetTile());
+            ValutaIzItems = new ObservableCollection<IValutaViewModel>();
+            ValutaUItems = new ObservableCollection<IValutaViewModel>();
+            KonvertujCommand = new RelayCommand(
+                                            () =>
+                                            {
+                                                Result = (string.IsNullOrEmpty(Iznos) ? 0 : Convert.ToDecimal(Iznos)) * ValutaIzItems[ValutaIzIndex].SrednjiKurs / ValutaUItems[ValutaUIndex].SrednjiKurs;
+                                            },
+                                               () => ValutaIzIndex != -1 && ValutaUIndex != -1);
+            SetTileCommand = new RelayCommand(() => SetTile());
         }
 
-        public ObservableCollection<ValutaViewModel> ValutaIzItems { get; private set; }
-        public ObservableCollection<ValutaViewModel> ValutaUItems { get; private set; }
+        public ObservableCollection<IValutaViewModel> ValutaIzItems { get; private set; }
+        public ObservableCollection<IValutaViewModel> ValutaUItems { get; private set; }
 
         private int _valutaIzIndex=-1;
         public int ValutaIzIndex
@@ -41,7 +44,8 @@ namespace KursnaListaPhoneApp.ViewModels
             get { return _valutaIzIndex; }
             set
             {
-                SetProperty(ref _valutaIzIndex, value);
+                _valutaIzIndex = value;
+                RaisePropertyChanged("ValutaIzIndex");
                 OnPinModeChanged();
             }
         }
@@ -53,7 +57,8 @@ namespace KursnaListaPhoneApp.ViewModels
             get { return _valutaUIndex; }
             set
             {
-                SetProperty(ref _valutaUIndex, value);
+                _valutaUIndex = value;
+                RaisePropertyChanged("ValutaUIndex");
                 OnPinModeChanged();
             }
         }
@@ -62,18 +67,26 @@ namespace KursnaListaPhoneApp.ViewModels
         public string Iznos
         {
             get { return _iznos; }
-            set { SetProperty(ref _iznos, value); }
+            set 
+            {
+                _iznos = value;
+                RaisePropertyChanged("Iznos");
+            }
         }
 
         private decimal _result;
         public decimal Result
         {
             get { return _result; }
-            set { SetProperty(ref _result, value); }
+            set 
+            {
+                _result = value;
+                RaisePropertyChanged("Result");
+            }
         }
 
-        public Command KonvertujCommand { get; set; }
-        public Command SetTileCommand { get; set; }
+        public RelayCommand KonvertujCommand { get; set; }
+        public RelayCommand SetTileCommand { get; set; }
 
         public bool IsDataLoaded
         {
@@ -81,10 +94,17 @@ namespace KursnaListaPhoneApp.ViewModels
             private set;
         }
 
+        public async Task InitializeAsync(dynamic parameter)
+        {
+            if (!IsDataLoaded)
+            {
+                await LoadData(parameter.From, parameter.To);
+            }
+        }
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
-        public async Task LoadData(string from, string to)
+        protected async Task LoadData(string from, string to)
         {
             CancellationTokenSource cts = new CancellationTokenSource();
 
@@ -122,7 +142,7 @@ namespace KursnaListaPhoneApp.ViewModels
 
             OnPinModeChanged();
 
-            KonvertujCommand.ExecuteChanged();
+            KonvertujCommand.RaiseCanExecuteChanged();
 
             this.IsDataLoaded = true;
             return;
@@ -140,8 +160,8 @@ namespace KursnaListaPhoneApp.ViewModels
         {
             get
             {
-                var from = ValutaIzItems[ValutaIzIndex].Model.OznakaValute;
-                var to = ValutaUItems[ValutaUIndex].Model.OznakaValute;
+                var from = ValutaIzItems[ValutaIzIndex].Oznaka;
+                var to = ValutaUItems[ValutaUIndex].Oznaka;
                 return !TileExists(from, to);
             }
         }
@@ -150,8 +170,8 @@ namespace KursnaListaPhoneApp.ViewModels
         {
             if(ValutaIzIndex==-1 || ValutaUIndex==-1)
                 return;
-            var from = ValutaIzItems[ValutaIzIndex].Model.OznakaValute;
-            var to = ValutaUItems[ValutaUIndex].Model.OznakaValute;
+            var from = ValutaIzItems[ValutaIzIndex].Oznaka;
+            var to = ValutaUItems[ValutaUIndex].Oznaka;
             if (TileExists(from, to))
             {
                 DeleteTile(from,to);

@@ -12,33 +12,25 @@ using System.Windows.Navigation;
 
 namespace MSC.Phone.Shared.Implementation
 {
-    public abstract class NavigationService : INavigationService
+    public class NavigationService : INavigationService
     {
-        private PhoneApplicationFrame Frame { get; set; }
-
-        private bool EnsureMainFrame()
+        private Frame _frame;
+        public Frame Frame
         {
-            if (Frame != null)
+            get
             {
-                return true;
+                return _frame;
             }
-
-            Frame = Application.Current.RootVisual as PhoneApplicationFrame;
-
-            if (Frame != null)
+            set
             {
-                // Could be null if the app runs inside a design tool
-                Frame.Navigated += OnFrameNavigated;
-
-                return true;
+                _frame = value;
+                _frame.Navigated += OnFrameNavigated;
             }
-
-            return false;
         }
 
         private IPageView CurrentView
         {
-            get { return EnsureMainFrame() ? Frame.Content as IPageView : null; }
+            get { return Frame.Content as IPageView; }
         }
 
         private void OnFrameNavigated(object sender, NavigationEventArgs e)
@@ -55,7 +47,9 @@ namespace MSC.Phone.Shared.Implementation
                     (((Page)e.Content).NavigationCacheMode == NavigationCacheMode.Enabled
                     || (((Page)e.Content).NavigationCacheMode == NavigationCacheMode.Required))))
                 {
-                    viewModel.Initialize(e.Uri);
+                    //dynamic parameters = new object();
+                    //((Page)e.Content).NavigationContext.QueryString
+                    viewModel.InitializeAsync(e.Uri);
                 }
             }
         }
@@ -99,15 +93,12 @@ namespace MSC.Phone.Shared.Implementation
 
         private void NavigateTo(Uri pageUri)
         {
-            if (EnsureMainFrame())
-            {
-                Frame.Navigate(pageUri);
-            }
+            Frame.Navigate(pageUri);
         }
 
         public void GoBack()
         {
-            if (EnsureMainFrame() && Frame.CanGoBack)
+            if (Frame.CanGoBack)
             {
                 Frame.GoBack();
             }
