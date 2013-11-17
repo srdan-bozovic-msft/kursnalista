@@ -56,8 +56,11 @@ namespace KursnaListaPhoneApp
             }
 
             IMobileServiceTable<WindowsPhoneDevice> deviceTable = App.MobileService.GetTable<WindowsPhoneDevice>();
-            var device = new WindowsPhoneDevice { DeviceToken = CurrentChannel.ChannelUri.ToString() };
-            deviceTable.InsertAsync(device);
+            if (CurrentChannel.ChannelUri != null)
+            {
+                var device = new WindowsPhoneDevice { DeviceToken = CurrentChannel.ChannelUri.ToString() };
+                deviceTable.InsertAsync(device);
+            }
         }
 
         /// <summary>

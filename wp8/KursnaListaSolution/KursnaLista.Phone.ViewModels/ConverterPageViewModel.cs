@@ -109,11 +109,7 @@ namespace KursnaLista.Phone.ViewModels
             CancellationTokenSource cts = new CancellationTokenSource();
 
             var kursnaListaZaDan = await _repository.NajnovijaKursnaListaAsync(cts.Token);
-            var items = kursnaListaZaDan.SrednjiKurs.Where(k => k.NazivZemlje != ""
-                                                                &&
-                                                                kursnaListaZaDan.ZaDevize.Any(
-                                                                    d => d.NazivZemlje == k.NazivZemlje))
-                                        .ToList();
+            var items = kursnaListaZaDan.SrednjiKurs.ToList();
             items.Insert(0,
                          new StavkaKursneListe()
                              {
