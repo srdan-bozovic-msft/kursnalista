@@ -221,7 +221,7 @@
         </phone:Pivot>
 
         <TextBlock Text="{Binding Path=Datum}" HorizontalAlignment="Right" Margin="0,18,12,0"/>
-
+        <TextBlock Text="OFFLINE" Visibility="{Binding IsDataCurrent, Converter={StaticResource InvertableBooleanToVisibilityConverter}}" Foreground="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Right" Margin="0,18,112,0"/>
         <!--Uncomment to see an alignment grid to help ensure your controls are
             aligned on common boundaries.  The image has a top margin of -32px to
             account for the System Tray. Set this to 0 (or remove the margin altogether)

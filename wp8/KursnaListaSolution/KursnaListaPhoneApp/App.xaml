@@ -3,7 +3,9 @@
   <Application.Resources>
     <local:LocalizedStrings xmlns:local="clr-namespace:KursnaListaPhoneApp" x:Key="LocalizedStrings" />
     <vm:ViewModelLocator x:Key="ViewModelLocator" d:IsDataSource="True" xmlns:vm="clr-namespace:KursnaListaPhoneApp.Common" />
-  </Application.Resources>
+        <converters:BooleanToVisibilityConverter xmlns:converters="clr-namespace:MSC.Phone.Shared.Converters;assembly=MSC.Phone.Shared"  x:Key="BooleanToVisibilityConverter" />
+        <converters:InvertableBooleanToVisibilityConverter xmlns:converters="clr-namespace:MSC.Phone.Shared.Converters;assembly=MSC.Phone.Shared"  x:Key="InvertableBooleanToVisibilityConverter" />
+    </Application.Resources>
   <Application.ApplicationLifetimeObjects>
     <!--Required object that handles lifetime events for the application-->
     <shell:PhoneApplicationService Launching="Application_Launching" Closing="Application_Closing" Activated="Application_Activated" Deactivated="Application_Deactivated" />

@@ -33,6 +33,7 @@ namespace KursnaLista.Phone.ViewModels
                                             },
                                                () => ValutaIzIndex != -1 && ValutaUIndex != -1);
             SetTileCommand = new RelayCommand(SetTile);
+            IsDataCurrent = true;
         }
 
         public ObservableCollection<IValutaViewModel> ValutaIzItems { get; private set; }
@@ -88,6 +89,20 @@ namespace KursnaLista.Phone.ViewModels
         public RelayCommand KonvertujCommand { get; set; }
         public RelayCommand SetTileCommand { get; set; }
 
+        private bool _isDataCurrent;
+        public bool IsDataCurrent
+        {
+            get
+            {
+                return _isDataCurrent;
+            }
+            private set
+            {
+                _isDataCurrent = value;
+                RaisePropertyChanged("IsDataCurrent");
+            }
+        }
+
         public bool IsDataLoaded
         {
             get;
@@ -108,7 +123,11 @@ namespace KursnaLista.Phone.ViewModels
         {
             CancellationTokenSource cts = new CancellationTokenSource();
 
-            var kursnaListaZaDan = await _repository.NajnovijaKursnaListaAsync(cts.Token);
+            var result = await _repository.NajnovijaKursnaListaAsync(cts.Token);
+
+            var kursnaListaZaDan = result.Value;
+            IsDataCurrent = result.IsCurrent;
+
             var items = kursnaListaZaDan.SrednjiKurs.ToList();
             items.Insert(0,
                          new StavkaKursneListe()

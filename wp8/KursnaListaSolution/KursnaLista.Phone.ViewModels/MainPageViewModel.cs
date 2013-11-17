@@ -27,6 +27,7 @@ namespace KursnaLista.Phone.ViewModels
             this.ZaEfektivniStraniNovacItems = new ObservableCollection<IStavkaKursneListeViewModel>();
             this.SrednjiKursItems = new ObservableCollection<IStavkaKursneListeViewModel>();
             GoToConverterCommand = new RelayCommand(() => _navigationService.Navigate("Converter", new { from = "RSD", to = "EUR" }));
+            IsDataCurrent = true;
         }
 
         public ObservableCollection<IStavkaKursneListeViewModel> ZaDevizeItems { get; private set; }
@@ -45,6 +46,19 @@ namespace KursnaLista.Phone.ViewModels
             }
         }
 
+        private bool _isDataCurrent;
+        public bool IsDataCurrent
+        {
+            get
+            {
+                return _isDataCurrent;
+            }
+            private set
+            {
+                _isDataCurrent = value;
+                RaisePropertyChanged("IsDataCurrent");
+            }
+        }
         public bool IsDataLoaded { get; private set; }
 
         public RelayCommand GoToConverterCommand { get; set; }
@@ -61,7 +75,10 @@ namespace KursnaLista.Phone.ViewModels
         {
             CancellationTokenSource cts = new CancellationTokenSource();
 
-            var kursnaListaZaDan = await _repository.NajnovijaKursnaListaAsync(cts.Token);
+            var result = await _repository.NajnovijaKursnaListaAsync(cts.Token);
+
+            var kursnaListaZaDan = result.Value;
+            IsDataCurrent = result.IsCurrent;
 
             Datum = kursnaListaZaDan.Datum.ToShortDateString();
 

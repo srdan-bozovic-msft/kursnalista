@@ -7,6 +7,7 @@ namespace KursnaLista.Phone.Contracts.ViewModels
 {
     public interface IConverterPageViewModel : IPageViewModel
     {
+        bool IsDataCurrent { get; }
         bool IsDataLoaded { get; }
         string Iznos { get; set; }
         RelayCommand KonvertujCommand { get; set; }

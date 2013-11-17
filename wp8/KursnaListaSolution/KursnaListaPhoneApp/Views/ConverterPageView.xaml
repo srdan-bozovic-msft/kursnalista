@@ -79,6 +79,8 @@
             <TextBlock Text="Konvertovani iznos" Style="{StaticResource PhoneTextSmallStyle}"></TextBlock>
             <TextBox IsEnabled="False" Text="{Binding Path=Result, StringFormat=0.0000}" ></TextBox>
         </StackPanel>
+        <TextBlock Text="OFFLINE" Visibility="{Binding IsDataCurrent, Converter={StaticResource InvertableBooleanToVisibilityConverter}}" Foreground="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Right" Margin="0,18,24,0"/>
+
     </Grid>
 
     <bar:Bindable.ApplicationBar>

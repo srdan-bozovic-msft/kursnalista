@@ -8,6 +8,7 @@ namespace KursnaLista.Phone.Contracts.ViewModels
     public interface IMainPageViewModel : IPageViewModel
     {
         string Datum { get; set; }
+        bool IsDataCurrent { get; }
         bool IsDataLoaded { get; }
         ObservableCollection<IStavkaKursneListeViewModel> SrednjiKursItems { get; }
         ObservableCollection<IStavkaKursneListeViewModel> ZaDevizeItems { get; }

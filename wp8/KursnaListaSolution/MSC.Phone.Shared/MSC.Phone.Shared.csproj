@@ -84,6 +84,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Contracts\DI\IInstanceFactory.cs" />
+    <Compile Include="Contracts\Repositories\RepositoryResult.cs" />
     <Compile Include="Contracts\Services\ICacheItem.cs" />
     <Compile Include="Contracts\Services\ICacheService.cs" />
     <Compile Include="Contracts\Services\IHttpClientService.cs" />
@@ -91,6 +92,8 @@
     <Compile Include="Contracts\Services\IStateService.cs" />
     <Compile Include="Contracts\ViewModels\IPageViewModel.cs" />
     <Compile Include="Contracts\Views\IPageView.cs" />
+    <Compile Include="Converters\InvertableBooleanToVisibilityConverter .cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Implementation\CacheItem.cs" />
     <Compile Include="Implementation\HttpClientService.cs" />
     <Compile Include="Implementation\NavigationService.cs" />

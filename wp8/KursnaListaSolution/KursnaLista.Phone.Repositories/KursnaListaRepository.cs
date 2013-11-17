@@ -1,6 +1,7 @@
 ﻿using KursnaLista.Phone.Contracts.Repositories;
 using KursnaLista.Phone.Contracts.Services.Data;
 using KursnaLista.Phone.Models;
+using MSC.Phone.Shared.Contracts.Repositories;
 using MSC.Phone.Shared.Contracts.Services;
 using System;
 using System.Collections.Generic;
@@ -26,27 +27,37 @@ namespace KursnaLista.Phone.Repositories
             _cacheService = cacheService;
         }
 
-        public async Task<KursnaListaZaDan> NajnovijaKursnaListaAsync(CancellationToken cancellationToken)
+        public async Task<RepositoryResult<KursnaListaZaDan>> NajnovijaKursnaListaAsync(CancellationToken cancellationToken)
         {
             var item = await _cacheService.GetAsync<KursnaListaZaDan>(KursnaListaLatestDataKey).ConfigureAwait(false);
             if (item.HasValue)
             {
                 if (cancellationToken.IsCancellationRequested)
-                    return item.Value;
+                    return RepositoryResult<KursnaListaZaDan>.Create(item.Value, false);
                 if (IsCurrent(item))
                 {
                     return item.Value;
                 }
             }
             var data = await _kursnaListaDataService.GetNajnovijaKursnaListaAsync(cancellationToken).ConfigureAwait(false);
-            await _cacheService.PutAsync(KursnaListaLatestDataKey, data).ConfigureAwait(false);
+            if (data != null)
+            {
+                await _cacheService.PutAsync(KursnaListaLatestDataKey, data).ConfigureAwait(false);
+            }
+            else
+            {
+                if(item.HasValue)
+                {
+                    return RepositoryResult<KursnaListaZaDan>.Create(item.Value, false);
+                }
+            }
             return data;
         }
 
         private bool IsCurrent(ICacheItem<KursnaListaZaDan> item)
         {
             var today = DateTime.Now.Date;
-            var datum = item.LastSync;
+            var datum = item.Value.Datum.Date;
             if (datum == today)
                 return true;
             if (today.DayOfWeek == DayOfWeek.Saturday
