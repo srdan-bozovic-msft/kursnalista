@@ -22,6 +22,7 @@ using KursnaLista.Phone.Services.Data;
 using KursnaLista.Phone.ViewModels;
 using Microsoft.Practices.ServiceLocation;
 using MSC.Phone.Shared.Contracts.DI;
+using MSC.Phone.Shared.Contracts.PhoneServices;
 using MSC.Phone.Shared.Contracts.Services;
 using MSC.Phone.Shared.DI;
 using MSC.Phone.Shared.Implementation;
@@ -52,6 +53,7 @@ namespace KursnaListaPhoneApp.Common
             ioc.RegisterType<IHttpClientService, HttpClientService>();
             ioc.RegisterType<ICacheService, PhoneStorageCacheService>();
             ioc.RegisterType<INavigationService, NavigationService>();
+            ioc.RegisterType<ITileService, TileService>();
 
             ioc.RegisterType<IKursnaListaDataService, KursnaListaDataService>();
 

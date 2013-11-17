@@ -84,6 +84,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Contracts\DI\IInstanceFactory.cs" />
+    <Compile Include="Contracts\PhoneServices\ITileService.cs" />
     <Compile Include="Contracts\Repositories\RepositoryResult.cs" />
     <Compile Include="Contracts\Services\ICacheItem.cs" />
     <Compile Include="Contracts\Services\ICacheService.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Implementation\HttpClientService.cs" />
     <Compile Include="Implementation\NavigationService.cs" />
     <Compile Include="Implementation\PhoneStorageCacheService.cs" />
+    <Compile Include="Implementation\TileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

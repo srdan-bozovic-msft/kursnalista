@@ -14,16 +14,19 @@ using KursnaLista.Phone.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using KursnaLista.Phone.Contracts.ViewModels;
+using MSC.Phone.Shared.Contracts.PhoneServices;
 
 namespace KursnaLista.Phone.ViewModels
 {
     public class ConverterPageViewModel : ViewModelBase, IConverterPageViewModel
     {
         private readonly IKursnaListaRepository _repository;
+        private readonly ITileService _tileService;
 
-        public ConverterPageViewModel(IKursnaListaRepository repository)
+        public ConverterPageViewModel(IKursnaListaRepository repository, ITileService tileService)
         {
             _repository = repository;
+            _tileService = tileService;
             ValutaIzItems = new ObservableCollection<IValutaViewModel>();
             ValutaUItems = new ObservableCollection<IValutaViewModel>();
             KonvertujCommand = new RelayCommand(
@@ -216,18 +219,14 @@ namespace KursnaLista.Phone.ViewModels
         {
             var url = string.Format("/Views/ConverterPageView.xaml?from={0}&to={1}", from, to);
 
-            ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault(o => o.NavigationUri.ToString().Contains(url));
-            return tile == null ? false : true;
+            return _tileService.TileExists(url);
         }
 
         private void DeleteTile(string from, string to)
         {
             var url = string.Format("/Views/ConverterPageView.xaml?from={0}&to={1}", from, to);
 
-            ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault(o => o.NavigationUri.ToString().Contains(url));
-            if (tile == null) return;
-
-            tile.Delete();
+            _tileService.DeleteTile(url);
 
             OnPinModeChanged();
         }
@@ -243,7 +242,7 @@ namespace KursnaLista.Phone.ViewModels
                 SmallBackgroundImage = new Uri("/Assets/Tiles/FlipCycleTileSmallExchange.png", UriKind.Relative),
             };
 
-            ShellTile.Create(new Uri(url, UriKind.Relative), tileData, true);
+            _tileService.CreateTile(url, tileData, true);
         }
     }
 }
