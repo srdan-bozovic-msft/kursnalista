@@ -15,16 +15,50 @@ using KursnaLista.Phone.Services.Data;
 using KursnaLista.Phone.Contracts.Repositories;
 using KursnaLista.Phone.Repositories;
 using KursnaListaPhoneApp.Common;
+using Microsoft.Phone.Notification;
+using Microsoft.WindowsAzure.MobileServices;
+using Newtonsoft.Json;
 
 namespace KursnaListaPhoneApp
 {
     public partial class App : Application
     {
+        private class WindowsPhoneDevice
+        {
+            public int Id { get; set; }
+
+            [JsonProperty(PropertyName = "deviceToken")]
+            public string DeviceToken { get; set; }
+        }
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>
         /// <returns>The root frame of the Phone Application.</returns>
         public static PhoneApplicationFrame RootFrame { get; private set; }
+
+        public static HttpNotificationChannel CurrentChannel { get; private set; }
+
+        public static MobileServiceClient MobileService = new MobileServiceClient(
+            "https://kursna-lista.azure-mobile.net/",
+            "llEmLGFuzYSKyONpRbcXIhkkVglNFk98"
+        );
+
+        private void AcquirePushChannel()
+        {
+            CurrentChannel = HttpNotificationChannel.Find("MyPushChannel");
+
+
+            if (CurrentChannel == null)
+            {
+                CurrentChannel = new HttpNotificationChannel("MyPushChannel");
+                CurrentChannel.Open();
+                CurrentChannel.BindToShellTile();
+            }
+
+            IMobileServiceTable<WindowsPhoneDevice> deviceTable = App.MobileService.GetTable<WindowsPhoneDevice>();
+            var device = new WindowsPhoneDevice { DeviceToken = CurrentChannel.ChannelUri.ToString() };
+            deviceTable.InsertAsync(device);
+        }
 
         /// <summary>
         /// Constructor for the Application object.
@@ -68,18 +102,14 @@ namespace KursnaListaPhoneApp
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-
+            AcquirePushChannel();
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
-            // Ensure that application state is restored appropriately
-            //if (!App.MainViewModel.IsDataLoaded)
-            //{
-            //    App.MainViewModel.LoadData();
-            //}
+
         }
 
         // Code to execute when the application is deactivated (sent to background)

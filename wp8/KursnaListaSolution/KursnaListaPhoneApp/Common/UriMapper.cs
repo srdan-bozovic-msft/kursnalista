@@ -14,7 +14,7 @@ namespace KursnaListaPhoneApp.Common
             {
                 var from = match.Groups[1].Value;
                 var to = match.Groups[2].Value;
-                return new Uri(string.Format("/Views/ConverterPage.xaml?from={0}&to={1}", from, to), UriKind.Relative);
+                return new Uri(string.Format("/Views/ConverterPageView.xaml?from={0}&to={1}", from, to), UriKind.Relative);
             }
             return uri;
         }
