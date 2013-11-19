@@ -2,22 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using KursnaListaPhoneApp.Resources;
 using KursnaLista.Phone.Contracts.Views;
 using MSC.Phone.Shared.Contracts.ViewModels;
-using KursnaLista.Phone.Contracts.ViewModels;
 
-namespace KursnaListaPhoneApp
+namespace KursnaLista.Phone.Views
 {
-    public partial class MainPageView : PhoneApplicationPage, IMainPageView
+    public partial class ConverterPageView : PhoneApplicationPage, IConverterPageView
     {
-        // Constructor
-        public MainPageView()
+        public ConverterPageView()
         {
             InitializeComponent();
         }

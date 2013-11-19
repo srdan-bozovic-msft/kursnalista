@@ -11,5 +11,6 @@ namespace MSC.Phone.Shared.Contracts.Services
         Task<bool> ExistsAsync(string key);
         Task PutAsync(string key, object value);
         Task<ICacheItem<T>> GetAsync<T>(string key);
+        Task<bool> HasBeenModifiedAsync(string key, DateTime since);
     }
 }

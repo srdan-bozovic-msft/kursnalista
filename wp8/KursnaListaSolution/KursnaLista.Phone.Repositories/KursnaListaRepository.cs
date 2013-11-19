@@ -54,6 +54,23 @@ namespace KursnaLista.Phone.Repositories
             return data;
         }
 
+        public async Task UpdateCache()
+        {
+            if (await _cacheService.HasBeenModifiedAsync(KursnaListaLatestDataKey, DateTime.Now.AddDays(-1)))
+                return;
+            var item = await _cacheService.GetAsync<KursnaListaZaDan>(KursnaListaLatestDataKey).ConfigureAwait(false);
+            if (item.HasValue && IsCurrent(item))
+            {
+                return;
+            }
+            var cancelationTokenSource = new CancellationTokenSource();
+            var data = await _kursnaListaDataService.GetNajnovijaKursnaListaAsync(cancelationTokenSource.Token).ConfigureAwait(false);
+            if (data != null)
+            {
+                await _cacheService.PutAsync(KursnaListaLatestDataKey, data).ConfigureAwait(false);
+            }
+        }
+
         private bool IsCurrent(ICacheItem<KursnaListaZaDan> item)
         {
             var today = DateTime.Now.Date;

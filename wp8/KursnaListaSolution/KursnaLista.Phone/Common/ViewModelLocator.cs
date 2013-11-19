@@ -1,7 +1,7 @@
 /*
   In App.xaml:
   <Application.Resources>
-      <vm:ViewModelLocator xmlns:vm="clr-namespace:KursnaListaPhoneApp"
+      <vm:ViewModelLocator xmlns:vm="clr-namespace:KursnaLista.Phone"
                            x:Key="Locator" />
   </Application.Resources>
   
@@ -27,7 +27,7 @@ using MSC.Phone.Shared.Contracts.Services;
 using MSC.Phone.Shared.DI;
 using MSC.Phone.Shared.Implementation;
 
-namespace KursnaListaPhoneApp.Common
+namespace KursnaLista.Phone.Common
 {
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -60,14 +60,6 @@ namespace KursnaListaPhoneApp.Common
             ioc.RegisterType<IKursnaListaRepository, KursnaListaRepository>();
             ioc.RegisterType<IMainPageViewModel, MainPageViewModel>();
             ioc.RegisterType<IConverterPageViewModel, ConverterPageViewModel>();
-
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////}
-            ////else
-            ////{
-            ////}
-
         }
 
         public IMainPageViewModel MainPageViewModel

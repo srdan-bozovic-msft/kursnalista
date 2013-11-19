@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Windows.Navigation;
 
-namespace KursnaListaPhoneApp.Common
+namespace KursnaLista.Phone.Common
 {
     public class UriMapper : UriMapperBase
     {

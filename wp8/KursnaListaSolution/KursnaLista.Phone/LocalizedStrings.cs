@@ -1,6 +1,6 @@
-﻿using KursnaListaPhoneApp.Resources;
+﻿using KursnaLista.Phone.Resources;
 
-namespace KursnaListaPhoneApp
+namespace KursnaLista.Phone
 {
     /// <summary>
     /// Provides access to string resources.

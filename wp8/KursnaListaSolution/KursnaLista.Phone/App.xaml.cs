@@ -7,19 +7,19 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
-using KursnaListaPhoneApp.Resources;
 using MSC.Phone.Shared.Contracts.Services;
 using MSC.Phone.Shared.Implementation;
 using KursnaLista.Phone.Contracts.Services.Data;
 using KursnaLista.Phone.Services.Data;
 using KursnaLista.Phone.Contracts.Repositories;
 using KursnaLista.Phone.Repositories;
-using KursnaListaPhoneApp.Common;
+using KursnaLista.Phone.Common;
 using Microsoft.Phone.Notification;
 using Microsoft.WindowsAzure.MobileServices;
 using Newtonsoft.Json;
+using KursnaLista.Phone.Resources;
 
-namespace KursnaListaPhoneApp
+namespace KursnaLista.Phone
 {
     public partial class App : Application
     {
@@ -106,6 +106,32 @@ namespace KursnaListaPhoneApp
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
             AcquirePushChannel();
+            RegisterScheduledTask();
+        }
+
+        private static void RegisterScheduledTask()
+        {
+            // A unique name for the task. 
+            var taskName = "Kursna lista";
+
+            // If the task exists
+            var oldTask = ScheduledActionService.Find(taskName) as PeriodicTask;
+            if (oldTask != null)
+            {
+                ScheduledActionService.Remove(taskName);
+            }
+
+            // Create the Task
+            PeriodicTask task = new PeriodicTask(taskName);
+
+            // Description is required
+            task.Description = "Periodično osvežava keširanu kursnu listu";
+
+            // Add it to the service to execute
+            ScheduledActionService.Add(task);
+
+            // For debugging
+            ScheduledActionService.LaunchForTest(taskName, TimeSpan.FromMilliseconds(5000));
         }
 
         // Code to execute when the application is activated (brought to foreground)

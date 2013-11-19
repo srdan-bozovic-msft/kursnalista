@@ -58,12 +58,27 @@ namespace MSC.Phone.Shared.Implementation
                     json = await reader.ReadToEndAsync().ConfigureAwait(false);
                 }
 
-                return new CacheItem<T>(JsonConvert.DeserializeObject<T>(json), file.DateCreated.LocalDateTime);
+                return new CacheItem<T>(JsonConvert.DeserializeObject<T>(json), file.DateCreated.UtcDateTime);
             }
             catch
             {
                 return new CacheItem<T>(default(T), DateTime.MinValue);
             }
+        }
+
+
+        public async Task<bool> HasBeenModifiedAsync(string key, DateTime since)
+        {
+            try
+            {
+                var localFolder = ApplicationData.Current.LocalFolder;
+                var file = await localFolder.GetFileAsync(key).AsTask().ConfigureAwait(false);
+                return since.ToUniversalTime() < file.DateCreated.UtcDateTime;
+            }
+            catch
+            {
+                return false;
+            } 
         }
     }
 }
