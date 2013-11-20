@@ -12,6 +12,12 @@ namespace MSC.Phone.Shared.Contracts.Repositories
         {
             return RepositoryResult<T>.Create(value);
         }
+
+        public static implicit operator T(RepositoryResult<T> result)
+        {
+            return result.Value;
+        }
+
         public static RepositoryResult<T> Create(T value, bool isCurrent=true)
         {
             return new RepositoryResult<T>(value, isCurrent);

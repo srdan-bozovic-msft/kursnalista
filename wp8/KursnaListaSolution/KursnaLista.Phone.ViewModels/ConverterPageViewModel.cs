@@ -128,6 +128,8 @@ namespace KursnaLista.Phone.ViewModels
         {
             CancellationTokenSource cts = new CancellationTokenSource();
 
+            KursnaListaZaDan kl = await _repository.NajnovijaKursnaListaAsync(cts.Token);
+
             var result = await _repository.NajnovijaKursnaListaAsync(cts.Token);
 
             var kursnaListaZaDan = result.Value;
