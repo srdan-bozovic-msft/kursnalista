@@ -49,7 +49,6 @@ namespace MSC.Phone.Shared
             {
                 _frame = value;
                 _frame.Navigated += OnFrameNavigated;
-                _frame.Navigating += OnFrameNavigating;
             }
         }
 
@@ -93,13 +92,6 @@ namespace MSC.Phone.Shared
                         await viewModel.InitializeAsync(new DynamicDictionary(parameters));
                     }
                 }
-            }
-        }
-
-        private void OnFrameNavigating(object sender, NavigatingCancelEventArgs e)
-        {
-            if(e.Uri.IsAbsoluteUri)
-            {
             }
         }
 

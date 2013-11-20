@@ -35,6 +35,12 @@ namespace MSC.Phone.Shared.DI
             SimpleIoc.Default.Register<TInterface, TService>();
         }
 
+        public void RegisterType<TService>()
+            where TService : class
+        {
+            SimpleIoc.Default.Register<TService>(true);
+        }
+
         public void RegisterInstance<TService>(TService instance)
             where TService : class
         {

@@ -12,6 +12,9 @@ namespace MSC.Phone.Shared.Contracts.DI
             where TService : class, TInterface
             where TInterface : class;
 
+        void RegisterType<TService>()
+            where TService : class;
+
         void RegisterInstance<TService>(TService instance)
             where TService : class;
 

@@ -56,14 +56,14 @@
 
         <!--ContentPanel - place additional content here-->
         <StackPanel  x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <toolkit:ListPicker Header="Iz valute" SelectedIndex="{Binding Path=ValutaIzIndex, Mode=TwoWay}" ItemsSource="{Binding Path=ValutaIzItems}" DisplayMemberPath="Naziv">
+            <toolkit:ListPicker Header="Iz valute" ItemsSource="{Binding Path=ValutaIzItems}" SelectedIndex="{Binding Path=ValutaIzIndex, Mode=TwoWay}" DisplayMemberPath="Naziv">
                 <toolkit:ListPicker.FullModeItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Naziv}" Margin="0 24 24 24" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiLight}" FontSize="{StaticResource PhoneFontSizeLarge}" />
                     </DataTemplate>
                 </toolkit:ListPicker.FullModeItemTemplate>
             </toolkit:ListPicker>
-            <toolkit:ListPicker Header="U valutu" SelectedIndex="{Binding Path=ValutaUIndex, Mode=TwoWay}" ItemsSource="{Binding Path=ValutaUItems}" DisplayMemberPath="Naziv" >
+            <toolkit:ListPicker Header="U valutu" ItemsSource="{Binding Path=ValutaUItems}" SelectedIndex="{Binding Path=ValutaUIndex, Mode=TwoWay}" DisplayMemberPath="Naziv" >
                 <toolkit:ListPicker.FullModeItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Naziv}" Margin="0 24 24 24" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiLight}" FontSize="{StaticResource PhoneFontSizeLarge}" />

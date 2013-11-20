@@ -130,8 +130,9 @@ namespace KursnaLista.Phone
             // Add it to the service to execute
             ScheduledActionService.Add(task);
 
-            // For debugging
+# if DEBUG
             ScheduledActionService.LaunchForTest(taskName, TimeSpan.FromMilliseconds(5000));
+#endif
         }
 
         // Code to execute when the application is activated (brought to foreground)
