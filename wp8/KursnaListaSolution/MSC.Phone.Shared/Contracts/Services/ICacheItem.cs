@@ -9,10 +9,7 @@ namespace MSC.Phone.Shared.Contracts.Services
     public interface ICacheItem<T>
     {
         bool HasValue { get; }
-        T Value
-        {
-            get;
-        }
+        T Value { get; }
         DateTime LastSync { get; }
     }
 }

@@ -111,24 +111,25 @@ namespace KursnaLista.Phone
 
         private static void RegisterScheduledTask()
         {
-            // A unique name for the task. 
             var taskName = "Kursna lista";
 
-            // If the task exists
-            var oldTask = ScheduledActionService.Find(taskName) as PeriodicTask;
-            if (oldTask != null)
+            PeriodicTask t;
+            t = ScheduledActionService.Find(taskName) as PeriodicTask;
+            bool found = (t != null);
+            if (!found)
+            {
+                t = new PeriodicTask(taskName);
+            }
+            t.Description = "Periodično osvežava keširanu kursnu listu";
+            if (!found)
+            {
+                ScheduledActionService.Add(t);
+            }
+            else
             {
                 ScheduledActionService.Remove(taskName);
+                ScheduledActionService.Add(t);
             }
-
-            // Create the Task
-            PeriodicTask task = new PeriodicTask(taskName);
-
-            // Description is required
-            task.Description = "Periodično osvežava keširanu kursnu listu";
-
-            // Add it to the service to execute
-            ScheduledActionService.Add(task);
 
 # if DEBUG
             ScheduledActionService.LaunchForTest(taskName, TimeSpan.FromMilliseconds(5000));
