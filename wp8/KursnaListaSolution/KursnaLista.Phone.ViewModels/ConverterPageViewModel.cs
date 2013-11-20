@@ -249,7 +249,7 @@ namespace KursnaLista.Phone.ViewModels
 
         public async Task LoadStateAsync(IDictionary<string, object> state)
         {
-            await LoadData("", "");
+            await LoadData("RSD", "EUR");
             ValutaIzIndex = (int)state["ValutaIzIndex"];
             ValutaUIndex = (int)state["ValutaUIndex"];
             Iznos = (string)state["Iznos"];
