@@ -11,6 +11,5 @@ namespace KursnaLista.Phone.Contracts.Services.Data
     public interface IKursnaListaDataService
     {
         Task<KursnaListaZaDan> GetNajnovijaKursnaListaAsync(CancellationToken cancellationToken);
-        Task UpdateCache();
     }
 }

@@ -54,7 +54,7 @@ namespace KursnaLista.Phone.Repositories
             return data;
         }
 
-        public async Task UpdateCache()
+        public async Task UpdateCache(CancellationToken cancellationToken)
         {
             if (await _cacheService.HasBeenModifiedAsync(KursnaListaLatestDataKey, DateTime.Now.AddDays(-1)))
                 return;
@@ -63,8 +63,7 @@ namespace KursnaLista.Phone.Repositories
             {
                 return;
             }
-            var cancelationTokenSource = new CancellationTokenSource();
-            var data = await _kursnaListaDataService.GetNajnovijaKursnaListaAsync(cancelationTokenSource.Token).ConfigureAwait(false);
+            var data = await _kursnaListaDataService.GetNajnovijaKursnaListaAsync(cancellationToken).ConfigureAwait(false);
             if (data != null)
             {
                 await _cacheService.PutAsync(KursnaListaLatestDataKey, data).ConfigureAwait(false);

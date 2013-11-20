@@ -12,6 +12,6 @@ namespace KursnaLista.Phone.Contracts.Repositories
     public interface IKursnaListaRepository
     {
         Task<RepositoryResult<KursnaListaZaDan>> NajnovijaKursnaListaAsync(CancellationToken cancellationToken);
-        Task UpdateCache();
+        Task UpdateCache(CancellationToken cancellationToken);
     }
 }
