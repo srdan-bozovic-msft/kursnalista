@@ -25,7 +25,7 @@ using MSC.Phone.Shared.Contracts.DI;
 using MSC.Phone.Shared.Contracts.PhoneServices;
 using MSC.Phone.Shared.Contracts.Services;
 using MSC.Phone.Shared.DI;
-using MSC.Phone.Shared.Implementation;
+using MSC.Phone.Shared;
 
 namespace KursnaLista.Phone.Common
 {

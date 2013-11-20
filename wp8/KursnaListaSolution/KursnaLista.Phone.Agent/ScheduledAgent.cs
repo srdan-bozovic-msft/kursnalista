@@ -2,7 +2,7 @@
 using System.Windows;
 using Microsoft.Phone.Scheduler;
 using KursnaLista.Phone.Services.Data;
-using MSC.Phone.Shared.Implementation;
+using MSC.Phone.Shared;
 using KursnaLista.Phone.Repositories;
 
 namespace KursnaLista.Phone.Agent

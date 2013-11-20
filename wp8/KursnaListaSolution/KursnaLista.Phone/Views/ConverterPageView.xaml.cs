@@ -10,19 +10,16 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using KursnaLista.Phone.Contracts.Views;
 using MSC.Phone.Shared.Contracts.ViewModels;
+using MSC.Phone.Shared;
 
 namespace KursnaLista.Phone.Views
 {
-    public partial class ConverterPageView : PhoneApplicationPage, IConverterPageView
+    public partial class ConverterPageView : StatefullPhoneApplicationPage, IConverterPageView
     {
         public ConverterPageView()
         {
             InitializeComponent();
         }
 
-        public IPageViewModel ViewModel
-        {
-            get { return DataContext as IPageViewModel; }
-        }
     }
 }

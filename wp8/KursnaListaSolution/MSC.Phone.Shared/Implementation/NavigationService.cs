@@ -1,4 +1,5 @@
 ﻿using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 using MSC.Phone.Shared.Contracts.Services;
 using MSC.Phone.Shared.Contracts.Views;
 using System;
@@ -11,7 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 
-namespace MSC.Phone.Shared.Implementation
+namespace MSC.Phone.Shared
 {
     public class NavigationService : INavigationService
     {
@@ -35,8 +36,9 @@ namespace MSC.Phone.Shared.Implementation
             }
         }
 
-        private Frame _frame;
         private Dictionary<string, object> _parameters;
+
+        private Frame _frame;
         public Frame Frame
         {
             get
@@ -47,6 +49,7 @@ namespace MSC.Phone.Shared.Implementation
             {
                 _frame = value;
                 _frame.Navigated += OnFrameNavigated;
+                _frame.Navigating += OnFrameNavigating;
             }
         }
 
@@ -60,7 +63,7 @@ namespace MSC.Phone.Shared.Implementation
             _parameters = new Dictionary<string, object>();
         }
 
-        private void OnFrameNavigated(object sender, NavigationEventArgs e)
+        private async void OnFrameNavigated(object sender, NavigationEventArgs e)
         {
             var view = e.Content as IPageView;
             if (view == null)
@@ -82,14 +85,21 @@ namespace MSC.Phone.Shared.Implementation
                         {
                             var parameter = _parameters[key];
                             _parameters.Remove(key);
-                            viewModel.InitializeAsync(parameter);
+                            await viewModel.InitializeAsync(parameter);
                         }
                     }
                     else
                     {
-                        viewModel.InitializeAsync(new DynamicDictionary(parameters));
+                        await viewModel.InitializeAsync(new DynamicDictionary(parameters));
                     }
                 }
+            }
+        }
+
+        private void OnFrameNavigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if(e.Uri.IsAbsoluteUri)
+            {
             }
         }
 

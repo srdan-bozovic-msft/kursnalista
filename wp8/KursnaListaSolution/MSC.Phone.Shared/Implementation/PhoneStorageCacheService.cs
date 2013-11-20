@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace MSC.Phone.Shared.Implementation
+namespace MSC.Phone.Shared
 {
     public class PhoneStorageCacheService : ICacheService
     {

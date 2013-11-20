@@ -8,7 +8,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using MSC.Phone.Shared.Contracts.Services;
-using MSC.Phone.Shared.Implementation;
+using MSC.Phone.Shared;
 using KursnaLista.Phone.Contracts.Services.Data;
 using KursnaLista.Phone.Services.Data;
 using KursnaLista.Phone.Contracts.Repositories;

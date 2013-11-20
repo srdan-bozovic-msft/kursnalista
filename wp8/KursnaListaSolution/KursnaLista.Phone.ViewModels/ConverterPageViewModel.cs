@@ -15,6 +15,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using KursnaLista.Phone.Contracts.ViewModels;
 using MSC.Phone.Shared.Contracts.PhoneServices;
+using System.Windows.Controls;
 
 namespace KursnaLista.Phone.ViewModels
 {
@@ -119,6 +120,7 @@ namespace KursnaLista.Phone.ViewModels
                 await LoadData(parameter.from, parameter.to);
             }
         }
+
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
@@ -243,6 +245,23 @@ namespace KursnaLista.Phone.ViewModels
             };
 
             _tileService.CreateTile(url, tileData, true);
+        }
+
+        public async Task LoadStateAsync(IDictionary<string, object> state)
+        {
+            await LoadData("", "");
+            ValutaIzIndex = (int)state["ValutaIzIndex"];
+            ValutaUIndex = (int)state["ValutaUIndex"];
+            Iznos = (string)state["Iznos"];
+            Result = (decimal)state["Result"];
+        }
+
+        public async Task SaveStateAsync(IDictionary<string, object> state)
+        {
+            state["ValutaIzIndex"] = ValutaIzIndex;
+            state["ValutaUIndex"] = ValutaUIndex;
+            state["Iznos"] = Iznos;
+            state["Result"] = Result;
         }
     }
 }

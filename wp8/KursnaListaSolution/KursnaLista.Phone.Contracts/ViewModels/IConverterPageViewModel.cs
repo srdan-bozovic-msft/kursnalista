@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 namespace KursnaLista.Phone.Contracts.ViewModels
 {
-    public interface IConverterPageViewModel : IPageViewModel
+    public interface IConverterPageViewModel : IStatefullPageViewModel
     {
         bool IsDataCurrent { get; }
         bool IsDataLoaded { get; }

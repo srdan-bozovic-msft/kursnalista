@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MSC.Phone.Shared.Implementation
+namespace MSC.Phone.Shared
 {
     public class HttpClientService : IHttpClientService
     {
