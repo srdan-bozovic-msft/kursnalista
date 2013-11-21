@@ -75,7 +75,7 @@
     </Compile>
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Mocks\Repositories\MockKursnaListaRepository.cs" />
-    <Compile Include="ConverterPageViewModelUnitTest.cs" />
+    <Compile Include="Tests\ConverterPageViewModelUnitTest.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

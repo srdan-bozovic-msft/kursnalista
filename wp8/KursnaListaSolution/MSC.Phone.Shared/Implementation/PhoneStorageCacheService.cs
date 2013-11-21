@@ -29,43 +29,35 @@ namespace MSC.Phone.Shared
 
         public async Task PutAsync(string key, object value)
         {
-            var mut = new Mutex(true, key);
-            mut.WaitOne();
             try
             {
                 var localFolder = ApplicationData.Current.LocalFolder;
                 var storageFile = await localFolder.CreateFileAsync(
-                    key, CreationCollisionOption.ReplaceExisting);
+                    key, CreationCollisionOption.ReplaceExisting).AsTask().ConfigureAwait(false);
                 var json = JsonConvert.SerializeObject(value);
 
-                using (var writer = new StreamWriter(await storageFile.OpenStreamForWriteAsync()))
+                using (var writer = new StreamWriter(await storageFile.OpenStreamForWriteAsync().ConfigureAwait(false)))
                 {
-                    await writer.WriteAsync(json);
+                    await writer.WriteAsync(json).ConfigureAwait(false);
                 }
             }
             catch
             {
             }
-            finally
-            {
-                mut.ReleaseMutex();
-            }
         }
 
         public async Task<ICacheItem<T>> GetAsync<T>(string key)
         {
-            var mut = new Mutex(true, key);
-            mut.WaitOne(); 
             try
             {
                 var localFolder = ApplicationData.Current.LocalFolder;
 
-                var file = await localFolder.GetFileAsync(key);
+                var file = await localFolder.GetFileAsync(key).AsTask().ConfigureAwait(false);
 
                 var json = "";
-                using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
+                using (var reader = new StreamReader(await file.OpenStreamForReadAsync().ConfigureAwait(false)))
                 {
-                    json = await reader.ReadToEndAsync();
+                    json = await reader.ReadToEndAsync().ConfigureAwait(false);
                 }
 
                 return new CacheItem<T>(JsonConvert.DeserializeObject<T>(json), file.DateCreated.UtcDateTime);
@@ -73,10 +65,6 @@ namespace MSC.Phone.Shared
             catch
             {
                 return new CacheItem<T>(default(T), DateTime.MinValue);
-            }
-            finally
-            {
-                mut.ReleaseMutex();
             }
         }
 

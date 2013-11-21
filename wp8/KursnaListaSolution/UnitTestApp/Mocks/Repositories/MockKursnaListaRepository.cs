@@ -23,7 +23,7 @@ namespace UnitTestApp.Mocks.Repositories
             return RepositoryResult<KursnaListaZaDan>.Create(_kursnaListZaDan, true);
         }
 
-        public async Task UpdateCache(System.Threading.CancellationToken cancellationToken)
+        public async Task UpdateCacheAsync(System.Threading.CancellationToken cancellationToken)
         {
              
         }

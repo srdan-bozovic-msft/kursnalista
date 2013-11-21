@@ -252,18 +252,18 @@ namespace KursnaLista.Phone.ViewModels
         public async Task LoadStateAsync(IDictionary<string, object> state)
         {
             await LoadData("RSD", "EUR");
-            ValutaIzIndex = (int)state["ValutaIzIndex"];
-            ValutaUIndex = (int)state["ValutaUIndex"];
-            Iznos = (string)state["Iznos"];
-            Result = (decimal)state["Result"];
+            //ValutaIzIndex = (int)state["ValutaIzIndex"];
+            //ValutaUIndex = (int)state["ValutaUIndex"];
+            //Iznos = (string)state["Iznos"];
+            //Result = (decimal)state["Result"];
         }
 
         public async Task SaveStateAsync(IDictionary<string, object> state)
         {
-            state["ValutaIzIndex"] = ValutaIzIndex;
-            state["ValutaUIndex"] = ValutaUIndex;
-            state["Iznos"] = Iznos;
-            state["Result"] = Result;
+            //state["ValutaIzIndex"] = ValutaIzIndex;
+            //state["ValutaUIndex"] = ValutaUIndex;
+            //state["Iznos"] = Iznos;
+            //state["Result"] = Result;
         }
     }
 }

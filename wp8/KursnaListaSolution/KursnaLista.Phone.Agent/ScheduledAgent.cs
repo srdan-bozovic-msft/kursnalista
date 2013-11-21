@@ -51,7 +51,7 @@ namespace KursnaLista.Phone.Agent
 
             var cancelationTokenSource = new CancellationTokenSource();
 
-            await repository.UpdateCache(cancelationTokenSource.Token);
+            await repository.UpdateCacheAsync(cancelationTokenSource.Token);
 
             NotifyComplete();
         }

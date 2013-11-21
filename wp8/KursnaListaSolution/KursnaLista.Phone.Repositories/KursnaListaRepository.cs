@@ -33,7 +33,7 @@ namespace KursnaLista.Phone.Repositories
             if (item.HasValue)
             {
                 if (cancellationToken.IsCancellationRequested)
-                    return RepositoryResult<KursnaListaZaDan>.Create(item.Value, false);
+                    return RepositoryResult<KursnaListaZaDan>.Create(item.Value, IsCurrent(item));
                 if (IsCurrent(item))
                 {
                     return item.Value;
@@ -54,7 +54,7 @@ namespace KursnaLista.Phone.Repositories
             return data;
         }
 
-        public async Task UpdateCache(CancellationToken cancellationToken)
+        public async Task UpdateCacheAsync(CancellationToken cancellationToken)
         {
             if (await _cacheService.HasBeenModifiedAsync(KursnaListaLatestDataKey, DateTime.Now.AddDays(-1)))
                 return;
