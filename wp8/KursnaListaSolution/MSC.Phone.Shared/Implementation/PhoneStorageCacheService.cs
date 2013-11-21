@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -28,34 +29,43 @@ namespace MSC.Phone.Shared
 
         public async Task PutAsync(string key, object value)
         {
+            var mut = new Mutex(true, key);
+            mut.WaitOne();
             try
             {
                 var localFolder = ApplicationData.Current.LocalFolder;
                 var storageFile = await localFolder.CreateFileAsync(
-                    key, CreationCollisionOption.ReplaceExisting).AsTask().ConfigureAwait(false);
+                    key, CreationCollisionOption.ReplaceExisting);
                 var json = JsonConvert.SerializeObject(value);
 
-                using (var writer = new StreamWriter(await storageFile.OpenStreamForWriteAsync().ConfigureAwait(false)))
+                using (var writer = new StreamWriter(await storageFile.OpenStreamForWriteAsync()))
                 {
-                    await writer.WriteAsync(json).ConfigureAwait(false);
+                    await writer.WriteAsync(json);
                 }
             }
             catch
             {
             }
+            finally
+            {
+                mut.ReleaseMutex();
+            }
         }
 
         public async Task<ICacheItem<T>> GetAsync<T>(string key)
         {
+            var mut = new Mutex(true, key);
+            mut.WaitOne(); 
             try
             {
                 var localFolder = ApplicationData.Current.LocalFolder;
-                var file = await localFolder.GetFileAsync(key).AsTask().ConfigureAwait(false);
+
+                var file = await localFolder.GetFileAsync(key);
 
                 var json = "";
-                using (var reader = new StreamReader(await file.OpenStreamForReadAsync().ConfigureAwait(false)))
+                using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
                 {
-                    json = await reader.ReadToEndAsync().ConfigureAwait(false);
+                    json = await reader.ReadToEndAsync();
                 }
 
                 return new CacheItem<T>(JsonConvert.DeserializeObject<T>(json), file.DateCreated.UtcDateTime);
@@ -63,6 +73,10 @@ namespace MSC.Phone.Shared
             catch
             {
                 return new CacheItem<T>(default(T), DateTime.MinValue);
+            }
+            finally
+            {
+                mut.ReleaseMutex();
             }
         }
 
