@@ -7,6 +7,7 @@ namespace KursnaLista.Phone.Contracts.ViewModels
 {
     public interface IConverterPageViewModel : IStatefullPageViewModel
     {
+        Task LoadData(string from, string to);
         bool IsDataCurrent { get; }
         bool IsDataLoaded { get; }
         string Iznos { get; set; }

@@ -124,7 +124,7 @@ namespace KursnaLista.Phone.ViewModels
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
-        protected async Task LoadData(string from, string to)
+        public async Task LoadData(string from, string to)
         {
             CancellationTokenSource cts = new CancellationTokenSource();
 
