@@ -3,8 +3,8 @@
   <Application.Resources>
     <local:LocalizedStrings xmlns:local="clr-namespace:KursnaLista.Phone" x:Key="LocalizedStrings" />
     <vm:ViewModelLocator x:Key="ViewModelLocator" d:IsDataSource="True" xmlns:vm="clr-namespace:KursnaLista.Phone.Common;assembly=KursnaLista.Phone" />
-        <converters:BooleanToVisibilityConverter xmlns:converters="clr-namespace:MSC.Phone.Shared.Converters;assembly=MSC.Phone.Shared"  x:Key="BooleanToVisibilityConverter" />
-        <converters:InvertableBooleanToVisibilityConverter xmlns:converters="clr-namespace:MSC.Phone.Shared.Converters;assembly=MSC.Phone.Shared"  x:Key="InvertableBooleanToVisibilityConverter" />
+        <converters:BooleanToVisibilityConverter xmlns:converters="clr-namespace:MSC.Phone.Shared.Converters;assembly=MSC.Phone.Shared.UI"  x:Key="BooleanToVisibilityConverter" />
+        <converters:InvertableBooleanToVisibilityConverter xmlns:converters="clr-namespace:MSC.Phone.Shared.Converters;assembly=MSC.Phone.Shared.UI"  x:Key="InvertableBooleanToVisibilityConverter" />
     </Application.Resources>
   <Application.ApplicationLifetimeObjects>
     <!--Required object that handles lifetime events for the application-->

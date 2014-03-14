@@ -89,17 +89,9 @@
     <Compile Include="Contracts\Services\ICacheItem.cs" />
     <Compile Include="Contracts\Services\ICacheService.cs" />
     <Compile Include="Contracts\Services\IHttpClientService.cs" />
-    <Compile Include="Contracts\Services\INavigationService.cs" />
-    <Compile Include="Contracts\ViewModels\IPageViewModel.cs" />
-    <Compile Include="Contracts\ViewModels\IStatefullPageViewModel.cs" />
-    <Compile Include="Contracts\Views\IPageView.cs" />
-    <Compile Include="Converters\InvertableBooleanToVisibilityConverter .cs" />
-    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Implementation\CacheItem.cs" />
     <Compile Include="Implementation\HttpClientService.cs" />
-    <Compile Include="Implementation\NavigationService.cs" />
     <Compile Include="Implementation\PhoneStorageCacheService.cs" />
-    <Compile Include="Implementation\StatefullPhoneApplicationPage.cs" />
     <Compile Include="Implementation\TileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

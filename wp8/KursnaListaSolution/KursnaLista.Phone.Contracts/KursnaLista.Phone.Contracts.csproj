@@ -112,6 +112,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MSC.Phone.Shared.UI\MSC.Phone.Shared.UI.csproj">
+      <Project>{C6AED2B9-FBBB-46B8-BB5E-C4F09CFBE1C2}</Project>
+      <Name>MSC.Phone.Shared.UI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MSC.Phone.Shared\MSC.Phone.Shared.csproj">
       <Project>{05CE307F-F924-4270-A7DC-B849B835DD47}</Project>
       <Name>MSC.Phone.Shared</Name>
