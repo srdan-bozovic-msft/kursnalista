@@ -83,6 +83,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Contracts\PhoneServices\ITileService.cs" />
     <Compile Include="Contracts\Services\INavigationService.cs" />
     <Compile Include="Contracts\ViewModels\IPageViewModel.cs" />
     <Compile Include="Contracts\ViewModels\IStatefullPageViewModel.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Converters\InvertableBooleanToVisibilityConverter .cs" />
     <Compile Include="Implementation\NavigationService.cs" />
     <Compile Include="Implementation\StatefullPhoneApplicationPage.cs" />
+    <Compile Include="Implementation\TileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

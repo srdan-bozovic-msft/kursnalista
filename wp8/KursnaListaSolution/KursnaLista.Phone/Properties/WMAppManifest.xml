@@ -4,7 +4,7 @@
   <Languages xmlns="">
     <Language code="sr-Latn-RS" />
   </Languages>
-  <App xmlns="" ProductID="{32f1f3ed-3fc4-436b-a4eb-fd9843388682}" Title="Kursna lista " RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="DPE Tim, Microsoft Serbia " Description="Aplikacija prikazuje kursnu listu na osnovu podataka Narodne banke Srbije. Pored toga omogućava informativno preračunavanje kursa iz jedne u drugu valutu." Publisher="DPE Tim, Microsoft Serbia " PublisherID="{fbced252-1096-48ab-8ece-32b7b601b4ce}">
+  <App xmlns="" ProductID="{32f1f3ed-3fc4-436b-a4eb-fd9843388682}" Title="Kursna lista " RuntimeType="Silverlight" Version="1.1.0.0" Genre="apps.normal" Author="DPE Tim, Microsoft Serbia " Description="Aplikacija prikazuje kursnu listu na osnovu podataka Narodne banke Srbije. Pored toga omogućava informativno preračunavanje kursa iz jedne u drugu valutu." Publisher="DPE Tim, Microsoft Serbia " PublisherID="{fbced252-1096-48ab-8ece-32b7b601b4ce}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
