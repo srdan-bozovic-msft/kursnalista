@@ -132,6 +132,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KursnaLista.Phone.Contracts.UI\KursnaLista.Phone.Contracts.UI.csproj">
+      <Project>{3AB0225E-3D71-4D9E-B8D6-87281597BF8F}</Project>
+      <Name>KursnaLista.Phone.Contracts.UI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KursnaLista.Phone.Contracts\KursnaLista.Phone.Contracts.csproj">
       <Project>{F670C3AF-29A9-4164-A678-4CE628A5BA5D}</Project>
       <Name>KursnaLista.Phone.Contracts</Name>
