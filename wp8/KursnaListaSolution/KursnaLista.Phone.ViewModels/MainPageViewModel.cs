@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight;
 using KursnaLista.Phone.Contracts.ViewModels;
 using MSC.Phone.Shared.Contracts.Services;
 using GalaSoft.MvvmLight.Command;
+using System.Windows.Input;
 
 namespace KursnaLista.Phone.ViewModels
 {
@@ -61,7 +62,7 @@ namespace KursnaLista.Phone.ViewModels
         }
         public bool IsDataLoaded { get; private set; }
 
-        public RelayCommand GoToConverterCommand { get; set; }
+        public ICommand GoToConverterCommand { get; set; }
 
         public async Task InitializeAsync(dynamic parameter)
         {

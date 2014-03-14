@@ -33,7 +33,9 @@ namespace KursnaLista.Phone.ViewModels
             KonvertujCommand = new RelayCommand(
                                             () =>
                                             {
-                                                Result = (string.IsNullOrEmpty(Iznos) ? 0 : Convert.ToDecimal(Iznos)) * ValutaIzItems[ValutaIzIndex].SrednjiKurs / ValutaUItems[ValutaUIndex].SrednjiKurs;
+                                                Result = (string.IsNullOrEmpty(Iznos) ? 0 : Convert.ToDecimal(Iznos)) *
+                                                    (ValutaIzItems[ValutaIzIndex].SrednjiKurs / ValutaIzItems[ValutaIzIndex].VaziZa) / 
+                                                    (ValutaUItems[ValutaUIndex].SrednjiKurs / ValutaUItems[ValutaUIndex].VaziZa);
                                             },
                                                () => ValutaIzIndex != -1 && ValutaUIndex != -1);
             SetTileCommand = new RelayCommand(SetTile);
@@ -90,8 +92,8 @@ namespace KursnaLista.Phone.ViewModels
             }
         }
 
-        public RelayCommand KonvertujCommand { get; set; }
-        public RelayCommand SetTileCommand { get; set; }
+        public ICommand KonvertujCommand { get; set; }
+        public ICommand SetTileCommand { get; set; }
 
         private bool _isDataCurrent;
         public bool IsDataCurrent
@@ -135,13 +137,14 @@ namespace KursnaLista.Phone.ViewModels
             var kursnaListaZaDan = result.Value;
             IsDataCurrent = result.IsCurrent;
 
-            var items = kursnaListaZaDan.SrednjiKurs.ToList();
+            var items = kursnaListaZaDan.SrednjiKurs.OrderBy(s=>s.NazivZemlje).ToList();
             items.Insert(0,
                          new StavkaKursneListe()
                              {
                                  NazivZemlje = "Srbija",
                                  OznakaValute = "RSD",
-                                 SrednjiKurs = 1.0M
+                                 SrednjiKurs = 1.0M,
+                                 VaziZa = 1
                              });
 
             var fromIndex = -1;
@@ -163,7 +166,7 @@ namespace KursnaLista.Phone.ViewModels
             ValutaUIndex = toIndex;
 
             OnPinModeChanged();
-            KonvertujCommand.RaiseCanExecuteChanged();
+            (KonvertujCommand as RelayCommand).RaiseCanExecuteChanged();
 
             this.IsDataLoaded = true;
             return;
@@ -252,18 +255,18 @@ namespace KursnaLista.Phone.ViewModels
         public async Task LoadStateAsync(IDictionary<string, object> state)
         {
             await LoadData("RSD", "EUR");
-            //ValutaIzIndex = (int)state["ValutaIzIndex"];
-            //ValutaUIndex = (int)state["ValutaUIndex"];
-            //Iznos = (string)state["Iznos"];
-            //Result = (decimal)state["Result"];
+            ValutaIzIndex = (int)state["ValutaIzIndex"];
+            ValutaUIndex = (int)state["ValutaUIndex"];
+            Iznos = (string)state["Iznos"];
+            Result = (decimal)state["Result"];
         }
 
         public async Task SaveStateAsync(IDictionary<string, object> state)
         {
-            //state["ValutaIzIndex"] = ValutaIzIndex;
-            //state["ValutaUIndex"] = ValutaUIndex;
-            //state["Iznos"] = Iznos;
-            //state["Result"] = Result;
+            state["ValutaIzIndex"] = ValutaIzIndex;
+            state["ValutaUIndex"] = ValutaUIndex;
+            state["Iznos"] = Iznos;
+            state["Result"] = Result;
         }
     }
 }

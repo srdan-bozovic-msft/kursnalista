@@ -8,5 +8,7 @@ namespace KursnaLista.Phone.Contracts.ViewModels
         string Oznaka { get; }
 
         decimal SrednjiKurs { get; }
+
+        int VaziZa { get; }
     }
 }

@@ -1,8 +1,8 @@
-﻿using GalaSoft.MvvmLight.Command;
-using MSC.Phone.Shared.Contracts.ViewModels;
+﻿using MSC.Phone.Shared.Contracts.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 namespace KursnaLista.Phone.Contracts.ViewModels
 {
     public interface IConverterPageViewModel : IStatefullPageViewModel
@@ -11,12 +11,12 @@ namespace KursnaLista.Phone.Contracts.ViewModels
         bool IsDataCurrent { get; }
         bool IsDataLoaded { get; }
         string Iznos { get; set; }
-        RelayCommand KonvertujCommand { get; set; }
+        ICommand KonvertujCommand { get; set; }
         bool PinMode { get; }
         decimal Result { get; set; }        
         Uri SetTileButtonIconUri { get; }
         string SetTileButtonText { get; }        
-        RelayCommand SetTileCommand { get; set; }
+        ICommand SetTileCommand { get; set; }
         int ValutaIzIndex { get; set; }
         ObservableCollection<IValutaViewModel> ValutaIzItems { get; }
         int ValutaUIndex { get; set; }

@@ -1,8 +1,8 @@
-﻿using GalaSoft.MvvmLight.Command;
-using MSC.Phone.Shared.Contracts.ViewModels;
+﻿using MSC.Phone.Shared.Contracts.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 namespace KursnaLista.Phone.Contracts.ViewModels
 {
     public interface IMainPageViewModel : IPageViewModel
@@ -13,6 +13,6 @@ namespace KursnaLista.Phone.Contracts.ViewModels
         ObservableCollection<IStavkaKursneListeViewModel> SrednjiKursItems { get; }
         ObservableCollection<IStavkaKursneListeViewModel> ZaDevizeItems { get; }
         ObservableCollection<IStavkaKursneListeViewModel> ZaEfektivniStraniNovacItems { get; }
-        RelayCommand GoToConverterCommand { get; set; }
+        ICommand GoToConverterCommand { get; set; }
     }
 }

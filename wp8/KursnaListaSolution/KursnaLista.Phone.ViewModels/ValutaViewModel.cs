@@ -30,5 +30,10 @@ namespace KursnaLista.Phone.ViewModels
         {
             get { return _model.SrednjiKurs; }
         }
+
+        public int VaziZa
+        {
+            get { return _model.VaziZa; }
+        }
     }
 }

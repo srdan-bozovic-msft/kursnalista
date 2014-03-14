@@ -24,7 +24,7 @@ namespace AppToAppCommunicationTestApp
 
         private async void LaunchKursnaLista_Click(object sender, RoutedEventArgs e)
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("kursnalista:Converter?from=EUR&to=USD"));
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("kursnalista:Converter?from=EUR&to=JPY"));
         }
 
         // Sample code for building a localized ApplicationBar
