@@ -27,7 +27,9 @@ namespace KursnaLista.Phone.ViewModels
             this.ZaDevizeItems = new ObservableCollection<IStavkaKursneListeViewModel>();
             this.ZaEfektivniStraniNovacItems = new ObservableCollection<IStavkaKursneListeViewModel>();
             this.SrednjiKursItems = new ObservableCollection<IStavkaKursneListeViewModel>();
-            GoToConverterCommand = new RelayCommand(() => _navigationService.Navigate("Converter", new { from = "RSD", to = "EUR" }));
+            GoToConverterCommand = new RelayCommand(() => 
+                _navigationService.Navigate("Converter", new { from = "RSD", to = "EUR" })
+                );
             IsDataCurrent = true;
         }
 
