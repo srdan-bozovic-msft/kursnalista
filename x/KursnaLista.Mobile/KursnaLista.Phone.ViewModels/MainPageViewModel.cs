@@ -92,8 +92,13 @@ namespace KursnaLista.Phone.ViewModels
 
             foreach (var item in kursnaListaZaDan.ZaDevize)
             {
+				try{
                 if (!string.IsNullOrEmpty(item.NazivZemlje))
                     ZaDevizeItems.Add(new StavkaKursneListeViewModel(item));
+				}
+				catch(Exception xcp){
+
+				}
             }
 
             foreach (var item in kursnaListaZaDan.ZaEfektivniStraniNovac)
