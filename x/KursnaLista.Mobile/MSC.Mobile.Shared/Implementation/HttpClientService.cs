@@ -15,7 +15,8 @@ namespace MSC.Phone.Shared
         public async Task<T> GetJsonAsync<T>(string url, CancellationToken cancellationToken)
         {
             var httpClientHandler = new HttpClientHandler();
-            httpClientHandler.AutomaticDecompression = System.Net.DecompressionMethods.GZip;
+			//hmmmm ?????
+            //httpClientHandler.AutomaticDecompression = System.Net.DecompressionMethods.GZip;
             var client = new HttpClient(httpClientHandler);
             var response = await client.GetAsync(url, cancellationToken).ConfigureAwait(false);
             if (response != null && (

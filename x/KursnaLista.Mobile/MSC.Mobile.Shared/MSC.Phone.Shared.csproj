@@ -6,7 +6,7 @@
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{F46F56B0-2F24-489F-92C9-59A2E430E793}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>MSC.Mobile.Shared</RootNamespace>
+    <RootNamespace>MSC.Phone.Shared</RootNamespace>
     <AssemblyName>MSC.Mobile.Shared</AssemblyName>
     <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -39,6 +39,7 @@
     <Compile Include="Implementation\CacheItem.cs" />
     <Compile Include="Implementation\HttpClientService.cs" />
     <Compile Include="Implementation\PhoneStorageCacheService.cs" />
+    <Compile Include="Implementation\NullCacheService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
