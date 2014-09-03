@@ -1,21 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{545FAF7D-CBBE-4AE7-A20F-09D0B03D90CB}</ProjectGuid>
+    <ProjectGuid>{E892294A-0668-41BE-9AD3-B3080AEDB670}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>KursnaLista.Mobile.Android</RootNamespace>
-    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <RootNamespace>MSC.Android.Shared</RootNamespace>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
-    <AndroidApplication>True</AndroidApplication>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
-    <AssemblyName>KursnaLista.Mobile.Android</AssemblyName>
+    <AssemblyName>MSC.Android.Shared</AssemblyName>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
-    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,50 +40,23 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="Xamarin.Forms.Core">
-      <HintPath>..\packages\Xamarin.Forms.1.2.2.6243\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Platform.Android">
-      <HintPath>..\packages\Xamarin.Forms.1.2.2.6243\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Xaml">
-      <HintPath>..\packages\Xamarin.Forms.1.2.2.6243\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Android.Support.v4">
-      <HintPath>..\packages\Xamarin.Android.Support.v4.20.0.0.3\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FileStorageCacheService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
-    <None Include="Assets\AboutAssets.txt" />
-    <None Include="Properties\AndroidManifest.xml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Main.axml" />
     <AndroidResource Include="Resources\values\Strings.xml" />
-    <AndroidResource Include="Resources\drawable\Icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
-  <Import Project="..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <ItemGroup>
-    <ProjectReference Include="..\KursnaLista.Mobile\KursnaLista.Mobile.csproj">
-      <Project>{AB952830-F9E6-4BAE-8DDD-A53C53C4F5D7}</Project>
-      <Name>KursnaLista.Mobile</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MSC.Android.Shared\MSC.Android.Shared.csproj">
-      <Project>{E892294A-0668-41BE-9AD3-B3080AEDB670}</Project>
-      <Name>MSC.Android.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MSC.Phone.Shared.DI\MSC.Phone.Shared.DI.csproj">
-      <Project>{A896A0E2-E44F-4E2B-91A7-4B2F38F15867}</Project>
-      <Name>MSC.Phone.Shared.DI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MSC.Mobile.Shared\MSC.Phone.Shared.csproj">
       <Project>{F46F56B0-2F24-489F-92C9-59A2E430E793}</Project>
       <Name>MSC.Phone.Shared</Name>

@@ -9,6 +9,8 @@ using Android.Widget;
 using Android.OS;
 
 using Xamarin.Forms.Platform.Android;
+using MSC.Phone.Shared.Contracts.Services;
+using MSC.Android.Shared;
 
 
 namespace KursnaLista.Mobile.Android
@@ -21,6 +23,12 @@ namespace KursnaLista.Mobile.Android
 			base.OnCreate (bundle);
 
 			Xamarin.Forms.Forms.Init (this, bundle);
+
+			#region Android Dependencies
+
+			ViewModelLocator.InstanceFactory.RegisterType<ICacheService, FileStorageCacheService>();
+
+			#endregion
 
 			SetPage (App.GetMainPage ());
 		}

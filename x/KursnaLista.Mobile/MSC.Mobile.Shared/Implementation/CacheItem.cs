@@ -12,7 +12,7 @@ namespace MSC.Phone.Shared
         private T _value;
         private DateTime _lastSync;
 
-        internal CacheItem(T value, DateTime lastSync)
+        public CacheItem(T value, DateTime lastSync)
         {
             _value = value;
             _lastSync = lastSync;

@@ -30,7 +30,7 @@ namespace KursnaLista.Mobile
 			var ioc = InstanceFactory;
 
 			ioc.RegisterType<IHttpClientService, HttpClientService>();
-			ioc.RegisterType<ICacheService, NullCacheService>();
+			//ioc.RegisterType<ICacheService, NullCacheService>();
 			//ioc.RegisterType<ICacheService, PhoneStorageCacheService>();
 			//ioc.RegisterType<INavigationService, NavigationService>();
 			//ioc.RegisterType<ITileService, TileService>();
