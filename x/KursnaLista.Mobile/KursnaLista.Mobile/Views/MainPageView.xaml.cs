@@ -5,7 +5,7 @@ using MSC.Phone.Shared.Contracts.ViewModels;
 
 namespace KursnaLista.Mobile
 {	
-	public partial class MainPageView : ContentPage
+	public partial class MainPageView : TabbedPage
 	{	
 		public MainPageView ()
 		{

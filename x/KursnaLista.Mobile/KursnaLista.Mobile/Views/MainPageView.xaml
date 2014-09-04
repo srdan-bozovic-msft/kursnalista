@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage 
+<TabbedPage 
 	xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 	x:Class="KursnaLista.Mobile.MainPageView">
-  <ContentPage.Resources>
+  <TabbedPage.Resources>
     <ResourceDictionary>
       <LayoutOptions x:Key="horzCenter"
                      Alignment="Center" />
@@ -18,9 +18,9 @@
 	 <x:String x:Key="PhoneSubtleBrush">Gray</x:String>
 
     </ResourceDictionary>
-  </ContentPage.Resources>
-	<ContentPage.Content>		
-         <Grid>
+  </TabbedPage.Resources>
+	<TabbedPage.Children>		
+         <!---<Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -43,8 +43,10 @@
                 <Label Grid.Column="3" HorizontalOptions="{StaticResource horzCenter}" VerticalOptions="{StaticResource vertCenter}" Text=""/>
                 <Label Grid.Column="4" HorizontalOptions="{StaticResource horzCenter}" VerticalOptions="{StaticResource vertCenter}" Text="kupovni"/>
                 <Label Grid.Column="5" HorizontalOptions="{StaticResource horzCenter}" VerticalOptions="{StaticResource vertCenter}" Text="prodajni"/>
-            </Grid>
-			<ListView Grid.Row="1" ItemsSource="{Binding ZaDevizeItems}">
+            </Grid>-->
+
+            <ContentPage Padding="20,30,20,0" Title="Sifra">
+			<ListView  Grid.Row="1" ItemsSource="{Binding ZaDevizeItems}">
 				<ListView.ItemTemplate>
                     <DataTemplate>
 				        <ViewCell>
@@ -61,18 +63,23 @@
 		                            <Grid.RowDefinitions>
 		                                <RowDefinition Height="70"></RowDefinition>
 		                            </Grid.RowDefinitions>
-		                            <Label Grid.Column="0" HorizontalOptions="{StaticResource horzCenter}" VerticalOptions="{StaticResource vertCenter}" Text="{Binding SifraValute}" TextColor="{StaticResource PhoneSubtleBrush}"/>
-		                            <Label Grid.Column="1" HorizontalOptions="{StaticResource horzLeft}" VerticalOptions="{StaticResource vertCenter}" Text="{Binding NazivZemlje}" TextColor="{StaticResource PhoneSubtleBrush}"/>
-		                            <Label Grid.Column="2" HorizontalOptions="{StaticResource horzCenter}" VerticalOptions="{StaticResource vertCenter}" Text="{Binding OznakaValute}" TextColor="{StaticResource PhoneSubtleBrush}"/>
-		                            <Label Grid.Column="3" HorizontalOptions="{StaticResource horzCenter}" VerticalOptions="{StaticResource vertCenter}" Text="{Binding VaziZa}" TextColor="{StaticResource PhoneSubtleBrush}"/>
-		                            <Label Grid.Column="4" HorizontalOptions="{StaticResource horzRight}" VerticalOptions="{StaticResource vertCenter}" Text="{Binding KupovniKurs}" TextColor="{StaticResource PhoneSubtleBrush}"/>
-		                            <Label Grid.Column="5" HorizontalOptions="{StaticResource horzRight}" VerticalOptions="{StaticResource vertCenter}" Text="{Binding ProdajniKurs}" TextColor="{StaticResource PhoneSubtleBrush}"/>
+		                            <Label Font="10" Grid.Column="0" HorizontalOptions="{StaticResource horzCenter}" VerticalOptions="{StaticResource vertCenter}" Text="{Binding SifraValute}"  TextColor="{StaticResource PhoneSubtleBrush}"/>
+		                            <Label Font="10" Grid.Column="1" HorizontalOptions="{StaticResource horzLeft}" VerticalOptions="{StaticResource vertCenter}" Text="{Binding NazivZemlje}" TextColor="{StaticResource PhoneSubtleBrush}"/>
+		                            <Label Font="10" Grid.Column="2" HorizontalOptions="{StaticResource horzCenter}" VerticalOptions="{StaticResource vertCenter}" Text="{Binding OznakaValute}" TextColor="{StaticResource PhoneSubtleBrush}"/>
+		                            <Label Font="10" Grid.Column="3" HorizontalOptions="{StaticResource horzCenter}" VerticalOptions="{StaticResource vertCenter}" Text="{Binding VaziZa}" TextColor="{StaticResource PhoneSubtleBrush}"/>
+		                            <Label Font="10" Grid.Column="4" HorizontalOptions="{StaticResource horzRight}" VerticalOptions="{StaticResource vertCenter}" Text="{Binding KupovniKurs}" TextColor="{StaticResource PhoneSubtleBrush}"/>
+		                            <Label Font="10" Grid.Column="5" HorizontalOptions="{StaticResource horzRight}" VerticalOptions="{StaticResource vertCenter}" Text="{Binding ProdajniKurs}" TextColor="{StaticResource PhoneSubtleBrush}"/>
 		                        </Grid>
           					</ViewCell.View>
 				        </ViewCell>
                     </DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
-        </Grid>
-	</ContentPage.Content>
-</ContentPage>
+		</ContentPage>
+		<ContentPage Title="Zemlja"></ContentPage>
+		<ContentPage Title="Valuta"></ContentPage>
+		<ContentPage Title="Kupovni"></ContentPage>
+		<ContentPage Title="Prodajni"></ContentPage>
+        <!--</Grid>-->
+	</TabbedPage.Children>
+</TabbedPage>
