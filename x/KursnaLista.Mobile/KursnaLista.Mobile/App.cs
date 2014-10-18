@@ -1,4 +1,5 @@
 ﻿using System;
+using KursnaLista.Mobile.Common;
 using Xamarin.Forms;
 
 namespace KursnaLista.Mobile
@@ -17,7 +18,7 @@ namespace KursnaLista.Mobile
 
 		public static Page GetMainPage ()
 		{	
-			return new MainPageView();
+			return new NavigationPage(new MainPageView());
 		}
 	}
 }

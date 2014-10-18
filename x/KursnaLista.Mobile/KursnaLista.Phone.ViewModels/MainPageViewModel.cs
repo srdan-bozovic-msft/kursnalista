@@ -9,29 +9,39 @@ using System.Threading;
 using KursnaLista.Phone.Contracts.Repositories;
 using GalaSoft.MvvmLight;
 using KursnaLista.Phone.Contracts.ViewModels;
+using KursnaLista.Phone.Contracts.Views;
+using MSC.Phone.Shared.Contracts.DI;
 using MSC.Phone.Shared.Contracts.Services;
 using GalaSoft.MvvmLight.Command;
 using System.Windows.Input;
+using MSC.Phone.Shared.UI.Implementation;
+using Xamarin.Forms;
 
 namespace KursnaLista.Phone.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase, IMainPageViewModel
+    public class MainPageViewModel : PageViewModel, IMainPageViewModel
     {
-        //private readonly INavigationService _navigationService;
         private readonly IKursnaListaRepository _repository;
+        private readonly IInstanceFactory _instanceFactory;
 
         public MainPageViewModel(
-			//INavigationService navigationService, 
-			IKursnaListaRepository repository)
+			IKursnaListaRepository repository,
+            IInstanceFactory instanceFactory)
         {
-            //_navigationService = navigationService;
             _repository = repository;
-            this.ZaDevizeItems = new ObservableCollection<IStavkaKursneListeViewModel>();
-            this.ZaEfektivniStraniNovacItems = new ObservableCollection<IStavkaKursneListeViewModel>();
-            this.SrednjiKursItems = new ObservableCollection<IStavkaKursneListeViewModel>();
-			GoToConverterCommand = new RelayCommand(() => 
-				{}
-                //_navigationService.Navigate("Converter", new { from = "RSD", to = "EUR" })
+            _instanceFactory = instanceFactory;
+            ZaDevizeItems = new ObservableCollection<IStavkaKursneListeViewModel>();
+            ZaEfektivniStraniNovacItems = new ObservableCollection<IStavkaKursneListeViewModel>();
+            SrednjiKursItems = new ObservableCollection<IStavkaKursneListeViewModel>();
+			GoToConverterCommand = new RelayCommand(() =>
+			{
+                var converterView = _instanceFactory.GetInstance<IConverterPageView>();
+			    var converterViewModel = converterView.ViewModel as IConverterPageViewModel;
+			    converterViewModel.ParameterFrom = "RSD";
+			    converterViewModel.ParameterTo = "EUR";
+                Navigation.PushAsync(converterView as Page);
+			}
+			    //_navigationService.Navigate("Converter", new { from = "RSD", to = "EUR" })
                 );
             IsDataCurrent = true;
         }
@@ -41,14 +51,12 @@ namespace KursnaLista.Phone.ViewModels
         public ObservableCollection<IStavkaKursneListeViewModel> SrednjiKursItems { get; private set; }
 
         private string _datum;
-
         public string Datum
         {
             get { return _datum; }
-            set             
-            { 
-                this._datum = value;
-                RaisePropertyChanged("Datum"); 
+            set
+            {
+                Set(ref _datum, value);
             }
         }
 
@@ -61,15 +69,14 @@ namespace KursnaLista.Phone.ViewModels
             }
             private set
             {
-                _isDataCurrent = value;
-                RaisePropertyChanged("IsDataCurrent");
+                Set(ref _isDataCurrent, value);
             }
         }
         public bool IsDataLoaded { get; private set; }
 
         public ICommand GoToConverterCommand { get; set; }
 
-        public async Task InitializeAsync(dynamic parameter)
+        public async Task InitializeAsync()
         {
             if (!IsDataLoaded)
             {
@@ -79,16 +86,14 @@ namespace KursnaLista.Phone.ViewModels
 
         protected async Task LoadData()
         {
-            CancellationTokenSource cts = new CancellationTokenSource();
+            var cts = new CancellationTokenSource();
 
             var result = await _repository.NajnovijaKursnaListaAsync(cts.Token);
 
             var kursnaListaZaDan = result.Value;
             IsDataCurrent = result.IsCurrent;
 
-			//hmmmmm ???
-            //Datum = kursnaListaZaDan.Datum.ToShortDateString();
-			Datum = kursnaListaZaDan.Datum.ToString();
+			Datum = kursnaListaZaDan.Datum.ToString("d");
 
             foreach (var item in kursnaListaZaDan.ZaDevize)
             {
@@ -96,7 +101,9 @@ namespace KursnaLista.Phone.ViewModels
                 if (!string.IsNullOrEmpty(item.NazivZemlje))
                     ZaDevizeItems.Add(new StavkaKursneListeViewModel(item));
 				}
-				catch(Exception xcp){
+// ReSharper disable once EmptyGeneralCatchClause
+				catch
+				{
 
 				}
             }
@@ -113,8 +120,7 @@ namespace KursnaLista.Phone.ViewModels
                     SrednjiKursItems.Add(new StavkaKursneListeViewModel(item));
             }
 
-            this.IsDataLoaded = true;
-            return;
+            IsDataLoaded = true;
         }
     }
 }

@@ -7,7 +7,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-
+using KursnaLista.Mobile.Common;
 using Xamarin.Forms.Platform.Android;
 using MSC.Phone.Shared.Contracts.Services;
 using MSC.Android.Shared;

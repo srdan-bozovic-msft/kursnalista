@@ -10,7 +10,5 @@ namespace MSC.Phone.Shared.Contracts.Views
     public interface IPageView
     {
         IPageViewModel ViewModel { get; }
-
-        IDictionary<string, object> State { get; }
     }
 }

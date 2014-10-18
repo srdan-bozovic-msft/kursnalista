@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -11,18 +10,21 @@ using System.Windows.Input;
 using System.Threading;
 using KursnaLista.Phone.Contracts.Repositories;
 using KursnaLista.Phone.Models;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using KursnaLista.Phone.Contracts.ViewModels;
 //using MSC.Phone.Shared.Contracts.PhoneServices;
 //using System.Windows.Controls;
+using MSC.Phone.Shared.UI.Implementation;
 
 namespace KursnaLista.Phone.ViewModels
 {
-    public class ConverterPageViewModel : ViewModelBase, IConverterPageViewModel
+    public class ConverterPageViewModel : PageViewModel, IConverterPageViewModel
     {
         private readonly IKursnaListaRepository _repository;
         //private readonly ITileService _tileService;
+
+        public string ParameterFrom { get; set; }
+        public string ParameterTo { get; set; }
 
         public ConverterPageViewModel(
 			IKursnaListaRepository repository 
@@ -54,8 +56,7 @@ namespace KursnaLista.Phone.ViewModels
             get { return _valutaIzIndex; }
             set
             {
-                _valutaIzIndex = value;
-                RaisePropertyChanged("ValutaIzIndex");
+                Set(ref _valutaIzIndex, value);
                 //OnPinModeChanged();
             }
         }
@@ -67,8 +68,7 @@ namespace KursnaLista.Phone.ViewModels
             get { return _valutaUIndex; }
             set
             {
-                _valutaUIndex = value;
-                RaisePropertyChanged("ValutaUIndex");
+                Set(ref _valutaUIndex, value);
                 //OnPinModeChanged();
             }
         }
@@ -79,8 +79,7 @@ namespace KursnaLista.Phone.ViewModels
             get { return _iznos; }
             set 
             {
-                _iznos = value;
-                RaisePropertyChanged("Iznos");
+                Set(ref _iznos, value);
             }
         }
 
@@ -90,8 +89,7 @@ namespace KursnaLista.Phone.ViewModels
             get { return _result; }
             set 
             {
-                _result = value;
-                RaisePropertyChanged("Result");
+                Set(ref _result, value);
             }
         }
 
@@ -107,8 +105,7 @@ namespace KursnaLista.Phone.ViewModels
             }
             private set
             {
-                _isDataCurrent = value;
-                RaisePropertyChanged("IsDataCurrent");
+                Set(ref _isDataCurrent, value);
             }
         }
 
@@ -118,11 +115,11 @@ namespace KursnaLista.Phone.ViewModels
             private set;
         }
 
-        public async Task InitializeAsync(dynamic parameter)
+        public async Task InitializeAsync()
         {
             if (!IsDataLoaded)
             {
-                await LoadData(parameter.from, parameter.to);
+                await LoadData(ParameterFrom, ParameterTo);
             }
         }
 
@@ -131,9 +128,7 @@ namespace KursnaLista.Phone.ViewModels
         /// </summary>
         public async Task LoadData(string from, string to)
         {
-            CancellationTokenSource cts = new CancellationTokenSource();
-
-            KursnaListaZaDan kl = await _repository.NajnovijaKursnaListaAsync(cts.Token);
+            var cts = new CancellationTokenSource();
 
             var result = await _repository.NajnovijaKursnaListaAsync(cts.Token);
 
@@ -142,7 +137,7 @@ namespace KursnaLista.Phone.ViewModels
 
             var items = kursnaListaZaDan.SrednjiKurs.OrderBy(s=>s.NazivZemlje).ToList();
             items.Insert(0,
-                         new StavkaKursneListe()
+                         new StavkaKursneListe
                              {
                                  NazivZemlje = "Srbija",
                                  OznakaValute = "RSD",
@@ -169,10 +164,10 @@ namespace KursnaLista.Phone.ViewModels
             ValutaUIndex = toIndex;
 
             //OnPinModeChanged();
-            (KonvertujCommand as RelayCommand).RaiseCanExecuteChanged();
+            var relayCommand = KonvertujCommand as RelayCommand;
+            if (relayCommand != null) relayCommand.RaiseCanExecuteChanged();
 
-            this.IsDataLoaded = true;
-            return;
+            IsDataLoaded = true;
         }
 
 //        private void OnPinModeChanged()

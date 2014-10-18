@@ -1,16 +1,17 @@
-﻿using System;
-using MSC.Phone.Shared.Contracts.DI;
-using MSC.Phone.Shared.DI;
-using MSC.Phone.Shared.Contracts.Services;
-using MSC.Phone.Shared;
-using KursnaLista.Phone.Contracts.Services.Data;
-using KursnaLista.Phone.Services.Data;
+﻿using KursnaLista.Mobile.Views;
 using KursnaLista.Phone.Contracts.Repositories;
-using KursnaLista.Phone.Repositories;
+using KursnaLista.Phone.Contracts.Services.Data;
 using KursnaLista.Phone.Contracts.ViewModels;
+using KursnaLista.Phone.Contracts.Views;
+using KursnaLista.Phone.Repositories;
+using KursnaLista.Phone.Services.Data;
 using KursnaLista.Phone.ViewModels;
+using MSC.Phone.Shared;
+using MSC.Phone.Shared.Contracts.DI;
+using MSC.Phone.Shared.Contracts.Services;
+using MSC.Phone.Shared.DI;
 
-namespace KursnaLista.Mobile
+namespace KursnaLista.Mobile.Common
 {
 	public class ViewModelLocator
 	{
@@ -32,15 +33,20 @@ namespace KursnaLista.Mobile
 			ioc.RegisterType<IHttpClientService, HttpClientService>();
 			//ioc.RegisterType<ICacheService, NullCacheService>();
 			//ioc.RegisterType<ICacheService, PhoneStorageCacheService>();
-			//ioc.RegisterType<INavigationService, NavigationService>();
+			//ioc.RegisterType<INavigation, NavigationService>();
 			//ioc.RegisterType<ITileService, TileService>();
 
 			ioc.RegisterType<IKursnaListaDataService, KursnaListaDataService>();
 
 			ioc.RegisterType<IKursnaListaRepository, KursnaListaRepository>();
+
 			ioc.RegisterType<IMainPageViewModel, MainPageViewModel>();
 			ioc.RegisterType<IConverterPageViewModel, ConverterPageViewModel>();
-		}
+
+            ioc.RegisterType<IMainPageView, MainPageView>();
+            ioc.RegisterType<IConverterPageView, ConverterPageView>();
+
+        }
 
 		public IMainPageViewModel MainPageViewModel
 		{

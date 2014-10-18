@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+					   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+					   x:Class="KursnaLista.Mobile.Views.ConverterPageView"
+             Padding="12,0,12,0">
+  <StackLayout>
+    <Label Text="Iz valute" />
+    
+    <Picker x:Name="PickerValutaIz" SelectedIndex="{Binding Path=ValutaIzIndex, Mode=TwoWay}"/>
+    
+    <Label Text="U valutu" />
+
+    <Picker x:Name="PickerValutaU" SelectedIndex="{Binding Path=ValutaUIndex, Mode=TwoWay}"/>
+    
+    <Label Text="Iznos" />
+    
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"></ColumnDefinition>
+        <ColumnDefinition Width="Auto"></ColumnDefinition>
+      </Grid.ColumnDefinitions>
+      
+      <Entry Text="{Binding Path=Iznos, Mode=TwoWay}" />
+      <Button Text="Konvertuj" Grid.Column="1" Command="{Binding Path=KonvertujCommand}"/>    
+    </Grid>
+    
+    <Label Text="Konvertovani iznos" />
+    
+    <Entry IsEnabled="False" Text="{Binding Path=Result, StringFormat='{0:0.0000}'}" />
+  </StackLayout>
+</ContentPage>

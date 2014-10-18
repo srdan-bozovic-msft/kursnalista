@@ -5,6 +5,7 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using KursnaLista.Mobile.Common;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using MSC.Phone.Shared;
