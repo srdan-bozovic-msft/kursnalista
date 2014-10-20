@@ -113,6 +113,10 @@
       <Project>{A896A0E2-E44F-4E2B-91A7-4B2F38F15867}</Project>
       <Name>MSC.Phone.Shared.DI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MSC.Phone.Shared.UI\MSC.Phone.Shared.UI.csproj">
+      <Project>{22360442-97A2-487A-895A-17D38A5B2CD8}</Project>
+      <Name>MSC.Phone.Shared.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />

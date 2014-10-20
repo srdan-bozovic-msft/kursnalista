@@ -14,6 +14,7 @@ using GalaSoft.MvvmLight.Command;
 using KursnaLista.Phone.Contracts.ViewModels;
 //using MSC.Phone.Shared.Contracts.PhoneServices;
 //using System.Windows.Controls;
+using MSC.Phone.Shared.Contracts.PhoneServices;
 using MSC.Phone.Shared.UI.Implementation;
 
 namespace KursnaLista.Phone.ViewModels
@@ -21,18 +22,18 @@ namespace KursnaLista.Phone.ViewModels
     public class ConverterPageViewModel : PageViewModel, IConverterPageViewModel
     {
         private readonly IKursnaListaRepository _repository;
-        //private readonly ITileService _tileService;
+        private readonly ITileService _tileService;
 
         public string ParameterFrom { get; set; }
         public string ParameterTo { get; set; }
 
         public ConverterPageViewModel(
-			IKursnaListaRepository repository 
-			//,ITileService tileService
+			IKursnaListaRepository repository,
+            ITileService tileService
 		)
         {
             _repository = repository;
-            //_tileService = tileService;
+            _tileService = tileService;
             ValutaIzItems = new ObservableCollection<IValutaViewModel>();
             ValutaUItems = new ObservableCollection<IValutaViewModel>();
             KonvertujCommand = new RelayCommand(
@@ -43,7 +44,7 @@ namespace KursnaLista.Phone.ViewModels
                                                     (ValutaUItems[ValutaUIndex].SrednjiKurs / ValutaUItems[ValutaUIndex].VaziZa);
                                             },
                                                () => ValutaIzIndex != -1 && ValutaUIndex != -1);
-            //SetTileCommand = new RelayCommand(SetTile);
+            SetTileCommand = new RelayCommand(SetTile);
             IsDataCurrent = true;
         }
 
@@ -176,79 +177,79 @@ namespace KursnaLista.Phone.ViewModels
 //            RaisePropertyChanged("SetTileButtonText");
 //        }
 //
-//        public Uri SetTileButtonIconUri
-//        {
-//            get
-//            {
-//                return PinMode ? new Uri("/Assets/AppBar/pin.png", UriKind.Relative) : new Uri("/Assets/AppBar/unpin.png", UriKind.Relative);
-//            }
-//        }
-//
-//        public string SetTileButtonText
-//        {
-//            get
-//            {
-//                return PinMode ? "zakači" : "otkači";
-//            }
-//        }
-//        
-//        public bool PinMode
-//        {
-//            get
-//            {
-//                if (ValutaIzIndex == -1 || ValutaUIndex == -1)
-//                    return true;
-//                var from = ValutaIzItems[ValutaIzIndex].Oznaka;
-//                var to = ValutaUItems[ValutaUIndex].Oznaka;
-//                return !TileExists(from, to);
-//            }
-//        }
+        public Uri SetTileButtonIconUri
+        {
+            get
+            {
+                return PinMode ? new Uri("/Assets/AppBar/pin.png", UriKind.Relative) : new Uri("/Assets/AppBar/unpin.png", UriKind.Relative);
+            }
+        }
 
-//        private void SetTile()
-//        {
-//            if(ValutaIzIndex==-1 || ValutaUIndex==-1)
-//                return;
-//            var from = ValutaIzItems[ValutaIzIndex].Oznaka;
-//            var to = ValutaUItems[ValutaUIndex].Oznaka;
-//            if (TileExists(from, to))
-//            {
-//                DeleteTile(from,to);
-//            }
-//            else
-//            {
-//                CreateTile(from,to);
-//            }
-//        }
+        public string SetTileButtonText
+        {
+            get
+            {
+                return PinMode ? "zakači" : "otkači";
+            }
+        }
 
-//        private bool TileExists(string from, string to)
-//        {
-//            var url = string.Format("/Views/ConverterPageView.xaml?from={0}&to={1}", from, to);
-//
-//            return _tileService.TileExists(url);
-//        }
-//
-//        private void DeleteTile(string from, string to)
-//        {
-//            var url = string.Format("/Views/ConverterPageView.xaml?from={0}&to={1}", from, to);
-//
-//            _tileService.DeleteTile(url);
-//
-//            OnPinModeChanged();
-//        }
-//
-//        private void CreateTile(string from, string to)
-//        {
-//            var url = string.Format("/Views/ConverterPageView.xaml?from={0}&to={1}", from, to);
-//
-//            var tileData = new FlipTileData
-//            {
-//                Title = string.Format("{0} -> {1}",from, to),
-//                BackgroundImage = new Uri("/Assets/Tiles/FlipCycleTileMediumExchange.png", UriKind.Relative),
-//                SmallBackgroundImage = new Uri("/Assets/Tiles/FlipCycleTileSmallExchange.png", UriKind.Relative),
-//            };
-//
-//            _tileService.CreateTile(url, tileData, true);
-//        }
+        public bool PinMode
+        {
+            get
+            {
+                if (ValutaIzIndex == -1 || ValutaUIndex == -1)
+                    return true;
+                var from = ValutaIzItems[ValutaIzIndex].Oznaka;
+                var to = ValutaUItems[ValutaUIndex].Oznaka;
+                return !TileExists(from, to);
+            }
+        }
+
+        private void SetTile()
+        {
+            if (ValutaIzIndex == -1 || ValutaUIndex == -1)
+                return;
+            var from = ValutaIzItems[ValutaIzIndex].Oznaka;
+            var to = ValutaUItems[ValutaUIndex].Oznaka;
+            if (TileExists(from, to))
+            {
+                DeleteTile(from, to);
+            }
+            else
+            {
+                CreateTile(from, to);
+            }
+        }
+
+        private bool TileExists(string from, string to)
+        {
+            var url = string.Format("/Views/ConverterPageView.xaml?from={0}&to={1}", from, to);
+
+            return _tileService.TileExists(url);
+        }
+
+        private void DeleteTile(string from, string to)
+        {
+            var url = string.Format("/Views/ConverterPageView.xaml?from={0}&to={1}", from, to);
+
+            _tileService.DeleteTile(url);
+
+            //OnPinModeChanged();
+        }
+
+        private void CreateTile(string from, string to)
+        {
+            var url = string.Format("/Views/ConverterPageView.xaml?from={0}&to={1}", from, to);
+
+            var tileData = new TileData
+            {
+                Title = string.Format("{0} -> {1}", from, to),
+                BackgroundImage = new Uri("/Assets/Tiles/FlipCycleTileMediumExchange.png", UriKind.Relative),
+                SmallBackgroundImage = new Uri("/Assets/Tiles/FlipCycleTileSmallExchange.png", UriKind.Relative),
+            };
+
+            _tileService.CreateTile(url, tileData, true);
+        }
 
         public async Task LoadStateAsync(IDictionary<string, object> state)
         {

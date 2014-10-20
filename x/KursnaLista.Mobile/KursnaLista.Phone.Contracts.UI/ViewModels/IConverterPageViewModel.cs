@@ -15,11 +15,11 @@ namespace KursnaLista.Phone.Contracts.ViewModels
         bool IsDataLoaded { get; }
         string Iznos { get; set; }
         ICommand KonvertujCommand { get; set; }
-        //bool PinMode { get; }
-        decimal Result { get; set; }        
-        //Uri SetTileButtonIconUri { get; }
-        //string SetTileButtonText { get; }        
-        //ICommand SetTileCommand { get; set; }
+        bool PinMode { get; }
+        decimal Result { get; set; }
+        Uri SetTileButtonIconUri { get; }
+        string SetTileButtonText { get; }
+        ICommand SetTileCommand { get; set; }
         int ValutaIzIndex { get; set; }
         ObservableCollection<IValutaViewModel> ValutaIzItems { get; }
         int ValutaUIndex { get; set; }

@@ -8,6 +8,8 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using KursnaLista.Mobile.Common;
+using MSC.Phone.Shared;
+using MSC.Phone.Shared.Contracts.PhoneServices;
 using Xamarin.Forms.Platform.Android;
 using MSC.Phone.Shared.Contracts.Services;
 using MSC.Android.Shared;
@@ -27,6 +29,7 @@ namespace KursnaLista.Mobile.Android
 			#region Android Dependencies
 
 			ViewModelLocator.InstanceFactory.RegisterType<ICacheService, FileStorageCacheService>();
+            ViewModelLocator.InstanceFactory.RegisterType<ITileService, NullTileService>();
 
 			#endregion
 

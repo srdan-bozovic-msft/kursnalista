@@ -4,9 +4,11 @@ using System.Linq;
 using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
+using KursnaLista.Phone.Contracts.ViewModels;
 using KursnaLista.Phone.Contracts.Views;
 using KursnaLista.Phone.ViewModels;
 using MSC.Phone.Shared.Contracts.ViewModels;
+using Xamarin.Forms;
 
 namespace KursnaLista.Mobile.Views
 {
@@ -16,6 +18,28 @@ namespace KursnaLista.Mobile.Views
         {
             InitializeComponent();
             BindingContext = App.Locator.ConverterPageViewModel;
+
+            if (Device.OS == TargetPlatform.WinPhone)
+            {
+                ToolbarItem toolbarItem = null;
+
+                toolbarItem = new ToolbarItem("konvertuj", "exchange.png", () =>
+                {
+                    var converterPageViewModel = ViewModel as IConverterPageViewModel;
+                    converterPageViewModel.SetTileCommand.Execute(null);
+                    SetToolbarItem(toolbarItem, converterPageViewModel);
+                });
+
+                SetToolbarItem(toolbarItem, App.Locator.ConverterPageViewModel);
+
+                ToolbarItems.Add(toolbarItem);
+            }
+        }
+
+        private void SetToolbarItem(ToolbarItem toolbarItem, IConverterPageViewModel converterPageViewModel)
+        {
+            toolbarItem.Name = converterPageViewModel.SetTileButtonText;
+            toolbarItem.Icon = new FileImageSource(){ File = converterPageViewModel.SetTileButtonIconUri.ToString()};
         }
 
         protected async override void OnAppearing()

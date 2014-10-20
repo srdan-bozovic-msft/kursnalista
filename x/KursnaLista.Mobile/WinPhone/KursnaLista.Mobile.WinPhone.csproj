@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\AlignmentGrid.png" />
+    <Content Include="Assets\AppBar\unpin.png" />
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -135,9 +136,11 @@
     <Content Include="Assets\Tiles\FlipCycleTileMedium.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Tiles\FlipCycleTileMediumExchange.png" />
     <Content Include="Assets\Tiles\FlipCycleTileSmall.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Tiles\FlipCycleTileSmallExchange.png" />
     <Content Include="Assets\Tiles\IconicTileMediumLarge.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -145,6 +148,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="exchange.png" />
+    <Content Include="Assets\AppBar\pin.png" />
     <Content Include="README_FIRST.txt" />
     <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
@@ -165,6 +169,14 @@
     <ProjectReference Include="..\MSC.Mobile.Shared\MSC.Phone.Shared.csproj">
       <Project>{F46F56B0-2F24-489F-92C9-59A2E430E793}</Project>
       <Name>MSC.Phone.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MSC.Phone.Shared.UI\MSC.Phone.Shared.UI.csproj">
+      <Project>{22360442-97A2-487A-895A-17D38A5B2CD8}</Project>
+      <Name>MSC.Phone.Shared.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MSC.WidowsPhone.Shared.UI\MSC.WidowsPhone.Shared.UI.csproj">
+      <Project>{2e236985-ff11-47f5-8291-61a1d6fe4e83}</Project>
+      <Name>MSC.WidowsPhone.Shared.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

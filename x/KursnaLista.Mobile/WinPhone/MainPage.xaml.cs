@@ -9,6 +9,7 @@ using KursnaLista.Mobile.Common;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using MSC.Phone.Shared;
+using MSC.Phone.Shared.Contracts.PhoneServices;
 using MSC.Phone.Shared.Contracts.Services;
 using Xamarin.Forms;
 
@@ -26,6 +27,7 @@ namespace KursnaLista.Mobile.WinPhone
             #region Windows Phone Dependencies
 
             ViewModelLocator.InstanceFactory.RegisterType<ICacheService, NullCacheService>();
+            ViewModelLocator.InstanceFactory.RegisterType<ITileService, TileService>();
 
             #endregion
 
