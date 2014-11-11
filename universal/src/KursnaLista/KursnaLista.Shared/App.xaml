@@ -1,0 +1,14 @@
+﻿<Application
+    x:Class="KursnaLista.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KursnaLista"
+    xmlns:converters="using:MSC.Universal.Shared.UI.Converters"
+    xmlns:common="using:KursnaLista.Common">
+    <Application.Resources>
+    <common:ViewModelLocator x:Key="ViewModelLocator" />
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:InvertableBooleanToVisibilityConverter x:Key="InvertableBooleanToVisibilityConverter" />
+        <converters:StringFormatConverter x:Key="StringFormatConverter" />
+    </Application.Resources>
+</Application>

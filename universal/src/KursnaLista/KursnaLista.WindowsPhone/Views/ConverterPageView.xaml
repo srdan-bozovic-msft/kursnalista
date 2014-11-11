@@ -1,0 +1,67 @@
+﻿<views:ConverterPageViewBase
+    x:Class="KursnaLista.Views.ConverterPageView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar" 
+    xmlns:shared="clr-namespace:MSC.Phone.Shared;assembly=MSC.Phone.Shared.UI"
+    xmlns:views="using:KursnaLista.Views"
+    DataContext="{Binding ConverterPageViewModel, Source={StaticResource ViewModelLocator}}"        
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style x:Key="OfflineTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Foreground" Value="{StaticResource PhoneAccentBrush}"></Setter>
+        </Style>
+    </Page.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="KURSNA LISTA" Style="{StaticResource TitleTextBlockStyle}"/>
+            <TextBlock Text="konvertor"  Style="{StaticResource HeaderTextBlockStyle}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <StackPanel  x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <ComboBox Header="Iz valute" SelectedValuePath="Naziv" ItemsSource="{Binding Path=ValutaIzItems}" SelectedIndex="{Binding Path=ValutaIzIndex, Mode=TwoWay}" DisplayMemberPath="Naziv" />
+            <ComboBox Header="U valutu" SelectedValuePath="Naziv" ItemsSource="{Binding Path=ValutaUItems}" SelectedIndex="{Binding Path=ValutaUIndex, Mode=TwoWay}" DisplayMemberPath="Naziv" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBox Header="Iznos" x:Name="TextBoxIznos" InputScope="Number" Text="{Binding Path=Iznos, Mode=TwoWay}" VerticalAlignment="Bottom"/>
+                <Button Content="Konvertuj" Grid.Column="2" Command="{Binding Path=KonvertujCommand}" VerticalAlignment="Bottom"/>
+            </Grid>
+            <TextBox Header="Konvertovani iznos" IsEnabled="False" Text="{Binding Path=Result, Converter={StaticResource StringFormatConverter}, ConverterParameter='\{0:0.0000\}'}" ></TextBox>
+        </StackPanel>
+        <TextBlock Grid.Row="0" Text="OFFLINE" Style="{StaticResource OfflineTextBlockStyle}"  Visibility="{Binding IsDataCurrent, Converter={StaticResource InvertableBooleanToVisibilityConverter}}"  HorizontalAlignment="Right" Margin="0,18,10,0"/>
+    </Grid>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Label="zakači" Visibility="{Binding PinMode, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding SetTileCommand}">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/AppBar/pin.png"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Label="otkači" Visibility="{Binding PinMode, Converter={StaticResource InvertableBooleanToVisibilityConverter}}" Command="{Binding SetTileCommand}">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/AppBar/unpin.png"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
+</views:ConverterPageViewBase>
