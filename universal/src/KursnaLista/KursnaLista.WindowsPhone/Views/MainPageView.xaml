@@ -61,10 +61,10 @@
                         <TextBlock Grid.Column="4" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="kupovni"></TextBlock>
                         <TextBlock Grid.Column="5" Style="{StaticResource HeaderTextBlockStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center" Text="prodajni"></TextBlock>
                     </Grid>
-                    <ListView HorizontalContentAlignment="Stretch" Grid.Row="1" Margin="0,0,0,0" ItemsSource="{Binding ZaDevizeItems}">
-                        <ListView.ItemTemplate>
+                    <ItemsControl HorizontalContentAlignment="Stretch" Grid.Row="1" Margin="0,0,0,0" ItemsSource="{Binding ZaDevizeItems}">
+                        <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid  HorizontalAlignment="Stretch" >
+                                <Grid Margin="0 5 0 10" >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="51*"></ColumnDefinition>
                                         <ColumnDefinition Width="165*"></ColumnDefinition>
@@ -84,8 +84,8 @@
                                     <TextBlock Grid.Column="5" Style="{StaticResource ItemTextBlockStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding ProdajniKurs}" />
                                 </Grid>
                             </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Grid>
             </PivotItem>
 
@@ -112,10 +112,10 @@
                         <TextBlock Grid.Column="4" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="kupovni"></TextBlock>
                         <TextBlock Grid.Column="5" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="prodajni"></TextBlock>
                     </Grid>
-                    <ListView Grid.Row="1" Margin="0,0,0,0" ItemsSource="{Binding ZaEfektivniStraniNovacItems}">
-                        <ListView.ItemTemplate>
+                    <ItemsControl Grid.Row="1" Margin="0,0,0,0" ItemsSource="{Binding ZaEfektivniStraniNovacItems}">
+                        <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <Grid Margin="0 5 0 10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="51*"></ColumnDefinition>
                                         <ColumnDefinition Width="165*"></ColumnDefinition>
@@ -132,8 +132,8 @@
                                     <TextBlock Grid.Column="5" Style="{StaticResource ItemTextBlockStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding ProdajniKurs}" Foreground="{StaticResource TextBoxPlaceholderTextThemeBrush}"></TextBlock>
                                 </Grid>
                             </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Grid>
             </PivotItem>
 
@@ -158,10 +158,10 @@
                         <TextBlock Grid.Column="3" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text=""></TextBlock>
                         <TextBlock Grid.Column="4" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="srednji"></TextBlock>
                     </Grid>
-                    <ListView Grid.Row="1" Margin="0,0,0,0" ItemsSource="{Binding SrednjiKursItems}">
-                        <ListView.ItemTemplate>
+                    <ItemsControl Grid.Row="1" Margin="0,0,0,0" ItemsSource="{Binding SrednjiKursItems}">
+                        <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <Grid Margin="0 5 0 10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="51*"></ColumnDefinition>
                                         <ColumnDefinition Width="195*"></ColumnDefinition>
@@ -176,8 +176,8 @@
                                     <TextBlock Grid.Column="4" Style="{StaticResource ItemTextBlockStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding SrednjiKurs}" Foreground="{StaticResource TextBoxPlaceholderTextThemeBrush}"></TextBlock>
                                 </Grid>
                             </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Grid>
             </PivotItem>
 
