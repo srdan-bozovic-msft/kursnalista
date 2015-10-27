@@ -54,6 +54,10 @@ namespace KursnaLista.Repositories
                 {
                     return RepositoryResult<KursnaListaZaDan>.Create(item.Value, false);
                 }
+                else
+                {
+                    return RepositoryResult<KursnaListaZaDan>.Create(item.Value, false, false);
+                }
             }
             return data;
         }

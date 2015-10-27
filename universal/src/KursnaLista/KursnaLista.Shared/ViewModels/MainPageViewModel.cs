@@ -71,27 +71,34 @@ namespace KursnaLista.ViewModels
 
             var result = await _repository.NajnovijaKursnaListaAsync(cts.Token);
 
-            var kursnaListaZaDan = result.Value;
-            IsDataCurrent = result.IsCurrent;
-
-            Datum = kursnaListaZaDan.Datum.ToString("d");
-
-            foreach (var item in kursnaListaZaDan.ZaDevize)
+            if (result.Successful)
             {
-                if (!string.IsNullOrEmpty(item.NazivZemlje))
-                    ZaDevizeItems.Add(new StavkaKursneListeViewModel(item));
+                var kursnaListaZaDan = result.Value;
+                IsDataCurrent = result.IsCurrent;
+
+                Datum = kursnaListaZaDan.Datum.ToString("d");
+
+                foreach (var item in kursnaListaZaDan.ZaDevize)
+                {
+                    if (!string.IsNullOrEmpty(item.NazivZemlje))
+                        ZaDevizeItems.Add(new StavkaKursneListeViewModel(item));
+                }
+
+                foreach (var item in kursnaListaZaDan.ZaEfektivniStraniNovac)
+                {
+                    if (!string.IsNullOrEmpty(item.NazivZemlje))
+                        ZaEfektivniStraniNovacItems.Add(new StavkaKursneListeViewModel(item));
+                }
+
+                foreach (var item in kursnaListaZaDan.SrednjiKurs)
+                {
+                    if (!string.IsNullOrEmpty(item.NazivZemlje))
+                        SrednjiKursItems.Add(new StavkaKursneListeViewModel(item));
+                }
             }
-
-            foreach (var item in kursnaListaZaDan.ZaEfektivniStraniNovac)
+            else
             {
-                if (!string.IsNullOrEmpty(item.NazivZemlje))
-                    ZaEfektivniStraniNovacItems.Add(new StavkaKursneListeViewModel(item));
-            }
-
-            foreach (var item in kursnaListaZaDan.SrednjiKurs)
-            {
-                if (!string.IsNullOrEmpty(item.NazivZemlje))
-                    SrednjiKursItems.Add(new StavkaKursneListeViewModel(item));
+                IsDataCurrent = false;
             }
 
             IsDataLoaded = true;

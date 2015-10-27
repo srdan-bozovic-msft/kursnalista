@@ -31,20 +31,19 @@ namespace MSC.Universal.Shared.Implementation
             var httpBaseProtocolFilter = new HttpBaseProtocolFilter();
             httpBaseProtocolFilter.AutomaticDecompression = true;
             var client = new HttpClient(httpBaseProtocolFilter);
-            var response = await client.GetAsync(new Uri(url, UriKind.RelativeOrAbsolute)).AsTask(cancellationToken).ConfigureAwait(false);
-            if (response != null && (
-                response.IsSuccessStatusCode))
+            try
             {
-                var responseContent = await response.Content.ReadAsStringAsync().AsTask(cancellationToken).ConfigureAwait(false);
-                try
+                var response = await client.GetAsync(new Uri(url, UriKind.RelativeOrAbsolute)).AsTask(cancellationToken).ConfigureAwait(false);
+                if (response != null && (
+                    response.IsSuccessStatusCode))
                 {
+                    var responseContent = await response.Content.ReadAsStringAsync().AsTask(cancellationToken).ConfigureAwait(false);
                     return JsonConvert.DeserializeObject<T>(responseContent);
                 }
-// ReSharper disable once EmptyGeneralCatchClause
-                catch (Exception)
-                {
-
-                }
+            }
+            catch (Exception)
+            {
+                
             }
             return default(T);
         }
