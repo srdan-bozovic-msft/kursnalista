@@ -30,9 +30,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ValutaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\AppBar\exchange.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\AppBar\pin.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\AppBar\refresh.png" />

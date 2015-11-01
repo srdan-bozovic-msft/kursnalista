@@ -25,7 +25,6 @@ namespace KursnaLista
 #if WINDOWS_PHONE_APP
         private TransitionCollection transitions;
 #endif
-        private TileUpdater _tileUpdater;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -52,13 +51,6 @@ namespace KursnaLista
                 this.DebugSettings.EnableFrameRateCounter = false;
             }
 #endif
-
-#region TileUpdate
-            
-            _tileUpdater = TileUpdateManager.CreateTileUpdaterForApplication();
-            _tileUpdater.StartPeriodicUpdate(new Uri("https://kursna-lista.azure-mobile.net/api/tile"), PeriodicUpdateRecurrence.HalfHour);
-
-#endregion
 
 #region ScheduledTask
 

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="8b13e468-59c7-41ae-920d-cb94ecd7b122" Publisher="CN=Stanko" Version="1.0.0.0" />
+  <Identity Name="55883SranBoovi.Kursnalista-Srbija" Publisher="CN=12851B10-42A0-45A7-A5D4-57B2862CB6C4" Version="1.1.0.0" />
   <Properties>
-    <DisplayName>KursnaLista.Windows</DisplayName>
-    <PublisherDisplayName>Stanko</PublisherDisplayName>
+    <DisplayName>Kursna lista - Srbija</DisplayName>
+    <PublisherDisplayName>Srđan Božović</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
@@ -23,8 +23,9 @@
           </BackgroundTasks>
         </Extension>
       </Extensions>
-      <m2:VisualElements DisplayName="Kursna lista" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="Aplikacija prikazuje kursnu listu na osnovu podataka Narodne banke Srbije. Pored toga omogućava informativno preračunavanje kursa iz jedne u drugu valutu." ForegroundText="light" BackgroundColor="#464646">
+      <m2:VisualElements DisplayName="Kursna lista - Srbija" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="Aplikacija prikazuje kursnu listu na osnovu podataka Narodne banke Srbije. Pored toga omogućava informativno preračunavanje kursa iz jedne u drugu valutu." ForegroundText="light" BackgroundColor="#464646">
         <m2:DefaultTile ShortName="Kursna lista" DefaultSize="square150x150Logo">
+          <m2:TileUpdate Recurrence="halfHour" UriTemplate="https://kursna-lista.azure-mobile.net/api/tile" />
           <m2:ShowNameOnTiles>
             <m2:ShowOn Tile="square150x150Logo" />
           </m2:ShowNameOnTiles>
