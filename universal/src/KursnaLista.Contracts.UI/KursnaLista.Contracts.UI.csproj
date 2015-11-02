@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MSC\MSC.Universal.Shared.UI\MSC.Universal.Shared.UI.csproj">
-      <Project>{53B179FB-6493-4647-AAD7-90197FD92BED}</Project>
+      <Project>{53b179fb-6493-4647-aad7-90197fd92bed}</Project>
       <Name>MSC.Universal.Shared.UI</Name>
     </ProjectReference>
   </ItemGroup>
