@@ -12,7 +12,8 @@ using GalaSoft.MvvmLight.Command;
 using KursnaLista.Contracts.Models;
 using KursnaLista.Contracts.Repositories;
 using KursnaLista.Contracts.UI.ViewModels;
-using MSC.Universal.Shared.Contracts.DeviceServices;
+
+using MSC.Universal.Shared.Contracts.PhoneServices;
 using MSC.Universal.Shared.Contracts.Services;
 using MSC.Universal.Shared.UI.Contracts.Services;
 using MSC.Universal.Shared.UI.Implementation;
@@ -110,7 +111,7 @@ namespace KursnaLista.ViewModels
 
         public bool IsDataLoaded { get; private set; }
 
-        protected async override void OnNavigatedForwardToView()
+        public async override void OnNavigatedForwardToView(dynamic parameter)
         {
             await LoadData(NavigationService.GetParameter<string>("From"), NavigationService.GetParameter<string>("To"));
         }
@@ -218,54 +219,54 @@ namespace KursnaLista.ViewModels
         private bool TileExists(string from, string to)
         {
             var secondaryTileId = string.Format("{0}-{1}", from, to);
-            return _tileService.TileExists(secondaryTileId);
+            return true;//_tileService.TileExists(secondaryTileId);
         }
 
         private async Task DeleteTileAsync(string from, string to)
         {
             var secondaryTileId = string.Format("{0}-{1}", from, to);
-            await _tileService.DeleteTileAsync(secondaryTileId);
+            //await _tileService.DeleteTileAsync(secondaryTileId);
             OnPinModeChanged();
         }
 
         private async Task CreateTileAsync(string from, string to)
         {
-            var secondaryTileId = string.Format("{0}-{1}", from, to);
-            var title = string.Format("{0} -> {1}", from, to);
-            var tileActivationArguments = string.Format("{0}:{1}", from, to);
-            var tileLogo = new Uri("ms-appx:///Assets/LogoExchange.png");
-            const TileSize tileSize = TileSize.Square150x150;
+            //var secondaryTileId = string.Format("{0}-{1}", from, to);
+            //var title = string.Format("{0} -> {1}", from, to);
+            //var tileActivationArguments = string.Format("{0}:{1}", from, to);
+            //var tileLogo = new Uri("ms-appx:///Assets/LogoExchange.png");
+            //const TileSize tileSize = TileSize.Square150x150;
 
-            var secondaryTile = new SecondaryTile(
-                secondaryTileId,
-                title,
-                tileActivationArguments,
-                tileLogo,
-                tileSize
-                );
+            //var secondaryTile = new SecondaryTile(
+            //    secondaryTileId,
+            //    title,
+            //    tileActivationArguments,
+            //    tileLogo,
+            //    tileSize
+            //    );
 
-            secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
-            secondaryTile.RoamingEnabled = true;
+            //secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
+            //secondaryTile.RoamingEnabled = true;
 
-            await _tileService.CreateTileAsync(secondaryTile);
-            OnPinModeChanged();
+            //await _tileService.CreateTileAsync(secondaryTile);
+            //OnPinModeChanged();
         }
 
-        public async override Task LoadStateAsync(IDictionary<string, object> state)
-        {
-            await LoadData("RSD", "EUR");
-            ValutaIzIndex = (int)state["ValutaIzIndex"];
-            ValutaUIndex = (int)state["ValutaUIndex"];
-            Iznos = (string)state["Iznos"];
-            Result = (decimal)state["Result"];
-        }
+        //public async override Task LoadStateAsync(IDictionary<string, object> state)
+        //{
+        //    await LoadData("RSD", "EUR");
+        //    ValutaIzIndex = (int)state["ValutaIzIndex"];
+        //    ValutaUIndex = (int)state["ValutaUIndex"];
+        //    Iznos = (string)state["Iznos"];
+        //    Result = (decimal)state["Result"];
+        //}
 
-        public async override Task SaveStateAsync(IDictionary<string, object> state)
-        {
-            state["ValutaIzIndex"] = ValutaIzIndex;
-            state["ValutaUIndex"] = ValutaUIndex;
-            state["Iznos"] = Iznos;
-            state["Result"] = Result;
-        }
+        //public async override Task SaveStateAsync(IDictionary<string, object> state)
+        //{
+        //    state["ValutaIzIndex"] = ValutaIzIndex;
+        //    state["ValutaUIndex"] = ValutaUIndex;
+        //    state["Iznos"] = Iznos;
+        //    state["Result"] = Result;
+        //}
     }
 }

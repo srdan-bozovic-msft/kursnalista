@@ -23,7 +23,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Common\ViewModelLocator.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PageViewBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ConverterPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\StavkaKursneListeViewModel.cs" />

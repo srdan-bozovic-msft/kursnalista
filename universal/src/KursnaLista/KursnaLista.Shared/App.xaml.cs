@@ -83,9 +83,7 @@ namespace KursnaLista
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
-                SuspensionManager.RegisterFrame(rootFrame, "AppFrame");
-
-                ViewModelLocator.NavigationService.Frame = rootFrame;
+                //SuspensionManager.RegisterFrame(rootFrame, "AppFrame");
 
                 // TODO: change this value to a cache size that is appropriate for your application
                 rootFrame.CacheSize = 1;
@@ -93,24 +91,23 @@ namespace KursnaLista
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     // Restore the saved session state only when appropriate
-                    try
-                    {
-                        await SuspensionManager.RestoreAsync();
-                    }
-                    catch (SuspensionManagerException)
-                    {
-                        // Something went wrong restoring state.
-                        // Assume there is no state and continue
-                    }
+                    //try
+                    //{
+                    //    await SuspensionManager.RestoreAsync();
+                    //}
+                    //catch (SuspensionManagerException)
+                    //{
+                    //    // Something went wrong restoring state.
+                    //    // Assume there is no state and continue
+                    //}
                 }
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
-            else
-            {
-                ViewModelLocator.NavigationService.Frame = rootFrame;                
-            }
+
+            ViewModelLocator.NavigationService.Frame = rootFrame;
+
 
             if (rootFrame.Content == null)
             {
@@ -175,7 +172,7 @@ namespace KursnaLista
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            await SuspensionManager.SaveAsync();
+            //await SuspensionManager.SaveAsync();
             deferral.Complete();
         }
     }

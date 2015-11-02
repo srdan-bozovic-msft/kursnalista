@@ -8,7 +8,7 @@ namespace KursnaLista.Services.Data
 {
     public class KursnaListaDataService : IKursnaListaDataService
     {
-        private const string BaseUrl = "https://kursna-lista.azure-mobile.net";
+        private const string BaseUrl = "http://kursna-lista.azure-mobile.net";
 
         private IHttpClientService _httpClientService;
 

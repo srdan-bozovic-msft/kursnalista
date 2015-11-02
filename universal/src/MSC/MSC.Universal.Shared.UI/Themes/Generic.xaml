@@ -1,0 +1,182 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:MSC.Universal.Shared.UI.Controls">
+
+    <controls:TileSizeToWidthConverter x:Key="WidthConverter" />
+    <controls:TileSizeToHeightConverter x:Key="HeightConverter" />
+
+    <Style TargetType="controls:FlipTile">
+        <Style.Setters>
+            <Setter Property="Height" Value="160"/>
+            <Setter Property="Width" Value="160"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="controls:FlipTile">
+                        <Border x:Name="Container"
+                                Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource WidthConverter}}"
+                                Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource HeightConverter}}">
+                            <Border.Resources>
+                                <CubicEase EasingMode="EaseOut" x:Key="FlipTileEaseOut"/>
+                            </Border.Resources>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="TileStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition x:Name="ExpandedToFlipped" 
+                                                          From="Expanded" To="Flipped"
+                                                          GeneratedDuration="0:0:0.85">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" 
+                                                                               Storyboard.TargetName="TilePanel">
+                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource HeightConverter}, ConverterParameter=-1}" EasingFunction="{StaticResource FlipTileEaseOut}"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                               Storyboard.TargetName="FrontPanel">
+                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.185" Value="Collapsed"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                               Storyboard.TargetName="BackPanel">
+                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.185" Value="Visible"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" 
+                                                                               Storyboard.TargetName="ViewportProjection">
+                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.0" Value="0.0" EasingFunction="{StaticResource FlipTileEaseOut}"/>
+                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.85" Value="180.0" EasingFunction="{StaticResource FlipTileEaseOut}"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                        <VisualTransition x:Name="FlippedToExpanded" 
+                                                          From="Flipped" To="Expanded"
+                                                          GeneratedDuration="0:0:0.85">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" 
+                                                                               Storyboard.TargetName="TilePanel">
+                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource HeightConverter}, ConverterParameter=-1}" EasingFunction="{StaticResource FlipTileEaseOut}"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                               Storyboard.TargetName="FrontPanel">
+                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.185" Value="Visible"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                               Storyboard.TargetName="BackPanel">
+                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.185" Value="Collapsed"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" 
+                                                                               Storyboard.TargetName="ViewportProjection">
+                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.0" Value="180.0" EasingFunction="{StaticResource FlipTileEaseOut}"/>
+                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.85" Value="360.0" EasingFunction="{StaticResource FlipTileEaseOut}"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                    </VisualStateGroup.Transitions>
+                                    <VisualStateGroup.States>
+                                        <VisualState x:Name="Expanded">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource HeightConverter}, ConverterParameter=-1}" 
+                                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" 
+                                                                 Storyboard.TargetName="TilePanel"/>
+                                                <DoubleAnimation Duration="0" To="0.0" 
+                                                                 Storyboard.TargetProperty="RotationX" 
+                                                                 Storyboard.TargetName="ViewportProjection"/>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                               Storyboard.TargetName="FrontPanel">
+                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Flipped">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource HeightConverter}, ConverterParameter=-1}" 
+                                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" 
+                                                                 Storyboard.TargetName="TilePanel"/>
+                                                <DoubleAnimation Duration="0" To="180.0" 
+                                                                 Storyboard.TargetProperty="RotationX" 
+                                                                 Storyboard.TargetName="ViewportProjection"/>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                               Storyboard.TargetName="FrontPanel">
+                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Collapsed"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                               Storyboard.TargetName="BackPanel">
+                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup.States>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <StackPanel x:Name="Viewport"
+                                    Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource WidthConverter}}"
+                                    Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource HeightConverter}}">
+                                <StackPanel.Projection>
+                                    <PlaneProjection CenterOfRotationY="0.25" x:Name="ViewportProjection"/>
+                                </StackPanel.Projection>
+                                <Grid x:Name="TilePanel"
+                                    Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource WidthConverter}}"
+                                    Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource HeightConverter}, ConverterParameter=2}">
+                                    <Grid.RenderTransform>
+                                        <CompositeTransform/>
+                                    </Grid.RenderTransform>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0"                                        
+                                        Background="{TemplateBinding Background}">
+                                    </Border>                                    
+                                    <Grid x:Name="BackPanel"
+                                      Grid.Row="1"
+                                      Background="{TemplateBinding Background}"
+                                      Visibility="Collapsed"
+                                      Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource WidthConverter}}"
+                                      Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource HeightConverter}}">
+                                        <Grid.Projection>
+                                            <PlaneProjection CenterOfRotationY="0.5" RotationX="180"/>
+                                        </Grid.Projection>
+                                        <ContentControl
+                                            x:Name="BackContentControl"
+                                            Content="{TemplateBinding Back}"
+                                            ContentTemplate="{TemplateBinding BackTemplate}"
+                                            HorizontalAlignment="Stretch"
+                                            IsTabStop="False"
+                                            Margin="-1,0,0,0"
+                                            Opacity="{TemplateBinding Opacity}"
+                                            VerticalAlignment="Stretch"
+                                            Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource WidthConverter}}"
+                                            Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource HeightConverter}}"                                            
+                                            />
+                                    </Grid>
+                                    <Border x:Name="FrontPanel"
+                                         Grid.Row="1"
+                                        Background="{TemplateBinding Background}">
+                                        <ContentControl
+                                            x:Name="FrontContentControl"
+                                            Content="{TemplateBinding Front}"
+                                            ContentTemplate="{TemplateBinding FrontTemplate}"
+                                            HorizontalAlignment="Stretch"
+                                            IsTabStop="False"
+                                            Margin="-1,0,0,0"
+                                            Opacity="{TemplateBinding Opacity}"
+                                            VerticalAlignment="Stretch"
+                                            Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource WidthConverter}}"
+                                            Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource HeightConverter}}"                                            
+                                            />
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+</ResourceDictionary>

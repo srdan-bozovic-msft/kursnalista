@@ -21,8 +21,8 @@ namespace KursnaLista.Contracts.UI.ViewModels
         ObservableCollection<IValutaViewModel> ValutaIzItems { get; }
         int ValutaUIndex { get; set; }
         ObservableCollection<IValutaViewModel> ValutaUItems { get; }
-        Task LoadStateAsync(IDictionary<string, object> state);
-        Task SaveStateAsync(IDictionary<string, object> state);
+        //Task LoadStateAsync(IDictionary<string, object> state);
+        //Task SaveStateAsync(IDictionary<string, object> state);
 
     }
 }

@@ -168,17 +168,21 @@
       <Project>{6ccf77bf-0417-491f-9f92-542c33479b50}</Project>
       <Name>KursnaLista.Tasks</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MSC.Universal.Shared.DI\MSC.Universal.Shared.DI.csproj">
-      <Project>{0C475067-9F90-410D-9E0F-2AF0D098B183}</Project>
+    <ProjectReference Include="..\..\MSC\MSC.Universal.Shared.DI\MSC.Universal.Shared.DI.csproj">
+      <Project>{786905ee-013c-4b84-9da6-55f9fefc6714}</Project>
       <Name>MSC.Universal.Shared.DI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MSC.Universal.Shared.UI\MSC.Universal.Shared.UI.csproj">
-      <Project>{CC72998E-611D-49AD-AB97-0228FEE7E659}</Project>
+    <ProjectReference Include="..\..\MSC\MSC.Universal.Shared.UI\MSC.Universal.Shared.UI.csproj">
+      <Project>{53b179fb-6493-4647-aad7-90197fd92bed}</Project>
       <Name>MSC.Universal.Shared.UI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MSC.Universal.Shared\MSC.Universal.Shared.csproj">
-      <Project>{C414C6C1-5D74-4C54-9E2B-F1F9E7B643DD}</Project>
+    <ProjectReference Include="..\..\MSC\MSC.Universal.Shared\MSC.Universal.Shared.csproj">
+      <Project>{9296ba7a-74f1-42d2-8c4b-9e64bff20198}</Project>
       <Name>MSC.Universal.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MSC\MSC.WindowsPhone.Shared.UI\MSC.WindowsPhone.Shared.UI.csproj">
+      <Project>{f0eae4e5-ae6c-4d0e-ba45-00bcd1b87fcd}</Project>
+      <Name>MSC.WindowsPhone.Shared.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
