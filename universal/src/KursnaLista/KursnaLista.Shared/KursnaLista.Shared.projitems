@@ -34,4 +34,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\AppBar\refresh.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\AppBar\unpin.png" />
   </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Assets\strings\sr-Latn-RS\Resources.resw" />
+  </ItemGroup>
 </Project>
