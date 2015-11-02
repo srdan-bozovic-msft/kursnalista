@@ -8,7 +8,7 @@ using KursnaLista.ViewModels;
 using KursnaLista.Views;
 
 using MSC.Universal.Shared.Contracts.DI;
-using MSC.Universal.Shared.Contracts.PhoneServices;
+using MSC.Universal.Shared.Contracts.DeviceServices;
 using MSC.Universal.Shared.Contracts.Services;
 using MSC.Universal.Shared.DI;
 using MSC.Universal.Shared.Implementation;

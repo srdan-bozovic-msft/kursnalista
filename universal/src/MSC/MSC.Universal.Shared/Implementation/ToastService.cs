@@ -1,5 +1,5 @@
 ﻿using System;
-using MSC.Universal.Shared.Contracts.PhoneServices;
+using MSC.Universal.Shared.Contracts.DeviceServices;
 using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
 

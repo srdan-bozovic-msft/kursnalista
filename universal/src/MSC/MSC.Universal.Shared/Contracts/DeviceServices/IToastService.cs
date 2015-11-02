@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MSC.Universal.Shared.Contracts.PhoneServices
+namespace MSC.Universal.Shared.Contracts.DeviceServices
 {
     public interface IToastService
     {

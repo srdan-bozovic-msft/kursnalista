@@ -2,7 +2,7 @@
 using Windows.Devices.Geolocation;
 using MSC.Universal.Shared.Contracts.Services;
 
-namespace MSC.Universal.Shared.Contracts.PhoneServices
+namespace MSC.Universal.Shared.Contracts.DeviceServices
 {
     public interface ILocationService
     {

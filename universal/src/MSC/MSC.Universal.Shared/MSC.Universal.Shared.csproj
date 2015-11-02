@@ -44,11 +44,11 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\DeviceServices\ILocationService.cs" />
+    <Compile Include="Contracts\DeviceServices\ITileService.cs" />
+    <Compile Include="Contracts\DeviceServices\IToastService.cs" />
     <Compile Include="Contracts\DI\IInstanceFactory.cs" />
     <Compile Include="Contracts\Models\RssFeed.cs" />
-    <Compile Include="Contracts\PhoneServices\ILocationService.cs" />
-    <Compile Include="Contracts\PhoneServices\ITileService.cs" />
-    <Compile Include="Contracts\PhoneServices\IToastService.cs" />
     <Compile Include="Contracts\Repositories\RepositoryResult.cs" />
     <Compile Include="Contracts\Services\ICacheItem.cs" />
     <Compile Include="Contracts\Services\ICacheService.cs" />
