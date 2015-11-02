@@ -107,7 +107,7 @@ namespace MSC.Universal.Shared.UI.Implementation
 
         private void DisposePreviousView()
         {
-            return;
+            //return;
             try
             {
                 if (CurrentView != null && ((Page)CurrentView).NavigationCacheMode ==

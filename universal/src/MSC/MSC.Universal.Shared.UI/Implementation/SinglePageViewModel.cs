@@ -8,6 +8,7 @@ using GalaSoft.MvvmLight.Command;
 using MSC.Universal.Shared.Contracts.Services;
 using MSC.Universal.Shared.UI.Contracts.Services;
 using MSC.Universal.Shared.UI.Contracts.ViewModels;
+using System.Threading.Tasks;
 
 namespace MSC.Universal.Shared.UI.Implementation
 {
@@ -18,20 +19,6 @@ namespace MSC.Universal.Shared.UI.Implementation
         private readonly bool _enableSharing;
 
         private string _pageKey;
-
-        /// <summary>
-        /// Register this event on the current page to populate the page
-        /// with content passed during navigation as well as any saved
-        /// state provided when recreating a page from a prior session.
-        /// </summary>
-        public event LoadStateEventHandler LoadState;
-        /// <summary>
-        /// Register this event on the current page to preserve
-        /// state associated with the current page in case the
-        /// application is suspended or the page is discarded from
-        /// the navigaqtion cache.
-        /// </summary>
-        public event SaveStateEventHandler SaveState;
 
         private readonly INavigationService _navigationService;
         ICommand _goBackCommand;
@@ -120,7 +107,7 @@ namespace MSC.Universal.Shared.UI.Implementation
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
         /// property provides the group to be displayed.</param>
-        public void OnNavigatedTo(NavigationEventArgs e)
+        public async void OnNavigatedTo(NavigationEventArgs e)
         {
             var frameState = SuspensionManager.SessionStateForFrame(NavigationService.Frame);
             _pageKey = "Page-" + NavigationService.Frame.BackStackDepth;
@@ -140,12 +127,6 @@ namespace MSC.Universal.Shared.UI.Implementation
                     nextPageKey = "Page-" + nextPageIndex;
                 }
 
-                // Pass the navigation parameter to the new page
-                if (LoadState != null)
-                {
-                    LoadState(this, new LoadStateEventArgs(e.Parameter, null));
-                }
-
                 NavigatedTo();
                 OnNavigatedToView(e.Parameter, true);
                 OnNavigatedForwardToView(e.Parameter);
@@ -155,10 +136,8 @@ namespace MSC.Universal.Shared.UI.Implementation
                 // Pass the navigation parameter and preserved page state to the page, using
                 // the same strategy for loading suspended state and recreating pages discarded
                 // from cache
-                if (LoadState != null)
-                {
-                    LoadState(this, new LoadStateEventArgs(e.Parameter, (Dictionary<String, Object>)frameState[_pageKey]));
-                }
+
+                await LoadStateAsync((Dictionary<String, Object>)frameState[_pageKey]);
 
                 NavigatedTo();
                 OnNavigatedToView(e.Parameter, false);
@@ -172,15 +151,20 @@ namespace MSC.Universal.Shared.UI.Implementation
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
         /// property provides the group to be displayed.</param>
-        public void OnNavigatedFrom(NavigationEventArgs e)
+        public async void OnNavigatedFrom(NavigationEventArgs e)
         {
             var frameState = SuspensionManager.SessionStateForFrame(NavigationService.Frame);
             var pageState = new Dictionary<String, Object>();
-            if (SaveState != null)
-            {
-                SaveState(this, new SaveStateEventArgs(pageState));
-            }
+            await SaveStateAsync(pageState);
             frameState[_pageKey] = pageState;
+        }
+
+        public async virtual Task LoadStateAsync(IDictionary<string, object> state)
+        {
+        }
+
+        public async virtual Task SaveStateAsync(IDictionary<string, object> state)
+        {
         }
 
         public virtual void NavigatedTo()
@@ -222,68 +206,6 @@ namespace MSC.Universal.Shared.UI.Implementation
         public bool IsBefore(TimeSpan interval, DateTime lastSyncDate)
         {
             return _timeService.IsBefore(interval, lastSyncDate);
-        }
-    }
-
-    /// <summary>
-    /// Represents the method that will handle the <see cref="SinglePageViewModel.LoadState"/>event
-    /// </summary>
-    public delegate void LoadStateEventHandler(object sender, LoadStateEventArgs e);
-    /// <summary>
-    /// Represents the method that will handle the <see cref="SinglePageViewModel.SaveState"/>event
-    /// </summary>
-    public delegate void SaveStateEventHandler(object sender, SaveStateEventArgs e);
-
-    /// <summary>
-    /// Class used to hold the event data required when a page attempts to load state.
-    /// </summary>
-    public class LoadStateEventArgs : EventArgs
-    {
-        /// <summary>
-        /// The parameter value passed to <see cref="Frame.Navigate(Type, Object)"/> 
-        /// when this page was initially requested.
-        /// </summary>
-        public Object NavigationParameter { get; private set; }
-        /// <summary>
-        /// A dictionary of state preserved by this page during an earlier
-        /// session.  This will be null the first time a page is visited.
-        /// </summary>
-        public Dictionary<string, Object> PageState { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LoadStateEventArgs"/> class.
-        /// </summary>
-        /// <param name="navigationParameter">
-        /// The parameter value passed to <see cref="Frame.Navigate(Type, Object)"/> 
-        /// when this page was initially requested.
-        /// </param>
-        /// <param name="pageState">
-        /// A dictionary of state preserved by this page during an earlier
-        /// session.  This will be null the first time a page is visited.
-        /// </param>
-        public LoadStateEventArgs(Object navigationParameter, Dictionary<string, Object> pageState)
-        {
-            NavigationParameter = navigationParameter;
-            PageState = pageState;
-        }
-    }
-    /// <summary>
-    /// Class used to hold the event data required when a page attempts to save state.
-    /// </summary>
-    public class SaveStateEventArgs : EventArgs
-    {
-        /// <summary>
-        /// An empty dictionary to be populated with serializable state.
-        /// </summary>
-        public Dictionary<string, Object> PageState { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SaveStateEventArgs"/> class.
-        /// </summary>
-        /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
-        public SaveStateEventArgs(Dictionary<string, Object> pageState)
-        {
-            PageState = pageState;
         }
     }
 }

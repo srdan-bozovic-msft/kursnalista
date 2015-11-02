@@ -17,7 +17,7 @@ namespace MSC.Universal.Shared.UI.Implementation
     /// carry across sessions, but that should be discarded when an application crashes or is
     /// upgraded.
     /// </summary>
-    internal sealed class SuspensionManager
+    public sealed class SuspensionManager
     {
         private static Dictionary<string, object> _sessionState = new Dictionary<string, object>();
 // ReSharper disable once InconsistentNaming
