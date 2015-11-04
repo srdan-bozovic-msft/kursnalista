@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="55883SranBoovi.Kursnalista-Srbija" Publisher="CN=12851B10-42A0-45A7-A5D4-57B2862CB6C4" Version="1.1.0.0" />
+  <Identity Name="55883SranBoovi.Kursnalista-Srbija" Publisher="CN=12851B10-42A0-45A7-A5D4-57B2862CB6C4" Version="1.1.0.11" />
   <Properties>
     <DisplayName>Kursna lista - Srbija</DisplayName>
     <PublisherDisplayName>Srđan Božović</PublisherDisplayName>
